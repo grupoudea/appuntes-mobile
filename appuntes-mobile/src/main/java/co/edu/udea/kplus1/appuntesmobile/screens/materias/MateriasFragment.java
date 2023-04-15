@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 
 import java.util.List;
 
@@ -39,6 +40,13 @@ public class MateriasFragment extends Fragment {
         consultarMaterias();
 
         return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        binding.buttonCrearMateria.setOnClickListener(v -> NavHostFragment.findNavController(MateriasFragment.this)
+                .navigate(R.id.action_materiasFragment_to_materiasFormFragment));
     }
 
     private void consultarMaterias() {

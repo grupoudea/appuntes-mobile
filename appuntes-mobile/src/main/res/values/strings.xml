@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">appuntes-mobile</string>
     <string name="app_bar_materias">Materias</string>
+    <string name="submit">crear</string>
+    <string name="crear_materia">Crear materia</string>
+    <string name="guardar">Guardar</string>
 </resources>
