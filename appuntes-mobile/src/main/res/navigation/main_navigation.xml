@@ -1,18 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/main_navigation"
+    xmlns:tools="http://schemas.android.com/tools"
     app:startDestination="@id/materiasFragment">
 
-    <navigation android:id="@+id/navigation2"
-        app:startDestination="@id/navigation">
-        <navigation
-            android:id="@+id/navigation"
-            app:startDestination="@id/materiasFragment">
-            <fragment
-                android:id="@+id/materiasFragment"
-                android:name="co.edu.udea.kplus1.appuntesmobile.screens.materias.MateriasFragment"
-                android:label="MateriasFragment" />
-        </navigation>
-    </navigation>
+    <fragment
+        android:id="@+id/materiasFragment"
+        android:name="co.edu.udea.kplus1.appuntesmobile.screens.materias.MateriasFragment"
+        android:label="MateriasFragment"
+        tools:layout="@layout/materias_fragment" />
 </navigation>
