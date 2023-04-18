@@ -4,4 +4,6 @@
     <string name="submit">crear</string>
     <string name="crear_materia">Crear materia</string>
     <string name="guardar">Guardar</string>
+    <string name="crear_apunte">Crear apunte</string>
+
 </resources>

@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/materias_layout"
+        android:id="@+id/apunte_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".screens.title.MateriasFormFragment">
 
         <TextView
-            android:id="@+id/textViewTitleCrearMateria"
+            android:id="@+id/textViewTitleCrearApunte"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -35,7 +35,7 @@
             android:inputType="textFilter"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewTitleCrearMateria" />
+            app:layout_constraintTop_toBottomOf="@+id/textViewTitleCrearApunte" />
 
         <EditText
             android:id="@+id/editTextCreditos"
