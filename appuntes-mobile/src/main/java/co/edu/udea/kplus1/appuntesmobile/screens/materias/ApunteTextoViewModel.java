@@ -8,6 +8,6 @@ public class ApunteTextoViewModel extends ViewModel {
 
     public ApunteTextoViewModel() {
 
-        Log.i("ViewModel", "ApunteTexoViewModel created!");
+        Log.i("ViewModel", "ApunteTextoViewModel created!");
     }
 }
