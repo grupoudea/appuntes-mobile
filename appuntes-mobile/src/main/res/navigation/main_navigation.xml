@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/materiasFragment"
-        android:name="co.edu.udea.kplus1.appuntesmobile.screens.materias.MateriasFragment"
+        android:name="co.edu.udea.kplus1.appuntesmobile.fragments.materias.MateriasFragment"
         android:label="MateriasFragment"
         tools:layout="@layout/materias_fragment" >
         <action
@@ -15,7 +15,7 @@
     </fragment>
     <fragment
         android:id="@+id/materiasFormFragment"
-        android:name="co.edu.udea.kplus1.appuntesmobile.screens.materias.MateriasFormFragment"
+        android:name="co.edu.udea.kplus1.appuntesmobile.fragments.materias.MateriasFormFragment"
         android:label="MateriasFormFragment"
         tools:layout="@layout/materias_form_fragment"/>
 </navigation>

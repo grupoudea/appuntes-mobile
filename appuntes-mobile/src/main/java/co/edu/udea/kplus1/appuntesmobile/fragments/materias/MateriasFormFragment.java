@@ -1,4 +1,4 @@
-package co.edu.udea.kplus1.appuntesmobile.screens.materias;
+package co.edu.udea.kplus1.appuntesmobile.fragments.materias;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

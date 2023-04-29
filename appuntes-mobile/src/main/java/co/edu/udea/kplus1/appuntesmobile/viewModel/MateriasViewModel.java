@@ -1,4 +1,4 @@
-package co.edu.udea.kplus1.appuntesmobile.screens.materias;
+package co.edu.udea.kplus1.appuntesmobile.viewModel;
 
 import android.util.Log;
 
