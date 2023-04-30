@@ -20,4 +20,14 @@ public class Datos {
         }
         return materias;
     }
+
+    public static List<MateriaUniversidad> getMateriasPensum() {
+        List<MateriaUniversidad> materias = new ArrayList<>();
+        materias.add(new MateriaUniversidad(1,"L1", "Logica 1", 10));
+        materias.add(new MateriaUniversidad(2,"L2", "Logica 2", 10));
+        materias.add(new MateriaUniversidad(3,"L3", "Logica 3", 10));
+        materias.add(new MateriaUniversidad(4,"L4", "Logica 4", 10));
+        materias.add(new MateriaUniversidad(5,"L5", "Logica 5", 10));
+        return materias;
+    }
 }

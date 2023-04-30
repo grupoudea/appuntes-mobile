@@ -10,6 +10,9 @@ public class Materia {
     private Integer creditos;
     private String profesor;
 
+    public Materia() {
+    }
+
     public Materia(Integer id, Integer idMateriaFk, MateriaUniversidad materiaUniversidad, Integer idEstudianteFk, Estudiante estudiante, Integer creditos, String profesor) {
         this.id = id;
         this.idMateriaFk = idMateriaFk;

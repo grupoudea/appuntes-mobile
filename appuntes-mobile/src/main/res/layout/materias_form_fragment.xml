@@ -24,16 +24,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:id="@+id/editTextBuscarMateria"
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteMateriasUniversidad"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
-            android:ems="10"
-            android:inputType="textFilter"
-            android:hint="@string/buscar_materia"
+            android:completionThreshold="1"
+            android:hint="@string/buscar_materia_autocomplete"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewTitleCrearMateria" />
@@ -46,12 +45,12 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:ems="10"
-            android:inputType="textFilter"
             android:hint="@string/creditos"
+            android:inputType="number|numberSigned"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextBuscarMateria" />
+            app:layout_constraintTop_toBottomOf="@+id/autoCompleteMateriasUniversidad" />
 
         <EditText
             android:id="@+id/editTextProfesor"
@@ -61,8 +60,8 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:ems="10"
-            android:inputType="textFilter"
             android:hint="@string/profesor"
+            android:inputType="textFilter"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -73,11 +72,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:text="@string/guardar"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextProfesor" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
