@@ -17,13 +17,13 @@ import java.util.stream.Collectors;
 
 import co.edu.udea.kplus1.appuntesmobile.R;
 import co.edu.udea.kplus1.appuntesmobile.databinding.MateriasFormFragmentBinding;
-import co.edu.udea.kplus1.appuntesmobile.model.MateriaPensum;
+import co.edu.udea.kplus1.appuntesmobile.model.MateriaUniversidad;
 import co.edu.udea.kplus1.appuntesmobile.service.temp.Datos;
 
 public class MateriasFormFragment extends Fragment {
 
     private MateriasFormFragmentBinding binding;
-    private List<MateriaPensum> materiasPensum;
+    private List<MateriaUniversidad> materiasUniversidad;
 
     public MateriasFormFragment() {
 
@@ -32,7 +32,7 @@ public class MateriasFormFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        materiasPensum = consultarMateriasPensum();
+        materiasUniversidad = consultarMateriasUniversidad();
     }
 
     @Override
@@ -52,13 +52,13 @@ public class MateriasFormFragment extends Fragment {
 
     private void buildAutocompleteMateriasPensum() {
         AutoCompleteTextView autoCompleteMateriasPensum = binding.getRoot().findViewById(R.id.autoCompleteMateriasPensum);
-        List<String> materias = materiasPensum.stream().map(MateriaPensum::getName).collect(Collectors.toList());
+        List<String> materias = materiasUniversidad.stream().map(MateriaUniversidad::getMateria).collect(Collectors.toList());
 
         ArrayAdapter<String> adaptador = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, materias);
         autoCompleteMateriasPensum.setAdapter(adaptador);
     }
 
-    private List<MateriaPensum> consultarMateriasPensum() {
+    private List<MateriaUniversidad> consultarMateriasUniversidad() {
         return Datos.getMateriasPensum();
     }
 
