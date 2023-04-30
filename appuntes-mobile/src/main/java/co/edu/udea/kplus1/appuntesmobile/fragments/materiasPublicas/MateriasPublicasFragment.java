@@ -3,7 +3,6 @@ package co.edu.udea.kplus1.appuntesmobile.fragments.materiasPublicas;
 import static co.edu.udea.kplus1.appuntesmobile.utils.Constants.KEY_LAYOUT_MANAGER;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,11 +83,9 @@ public class MateriasPublicasFragment extends Fragment {
         call.enqueue(new Callback<StandardResponse<List<Materia>>>() {
             @Override
             public void onResponse(Call<StandardResponse<List<Materia>>> call, Response<StandardResponse<List<Materia>>> response) {
-                Log.i("RETRO ERROR3", "Entra");
                 List<Materia> materiasList = response.body().getBody();
 
                 for (Materia materia : materiasList) {
-                    System.out.println("materia " + materia.getId());
                     materias.add(materia);
                 }
                 mAdapter = new MateriaAdapter(materias);
@@ -97,9 +94,6 @@ public class MateriasPublicasFragment extends Fragment {
 
             @Override
             public void onFailure(Call<StandardResponse<List<Materia>>> call, Throwable t) {
-                Log.i("RETRO ERROR", "Error:" + t.getLocalizedMessage());
-                Log.i("RETRO ERROR2", "Error:" + t.fillInStackTrace());
-
                 Toast.makeText(getActivity(), "ERROR" + t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
