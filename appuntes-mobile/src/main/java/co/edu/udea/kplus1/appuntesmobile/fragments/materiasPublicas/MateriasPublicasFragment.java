@@ -25,6 +25,7 @@ import co.edu.udea.kplus1.appuntesmobile.fragments.materias.MateriaAdapter;
 import co.edu.udea.kplus1.appuntesmobile.model.Materia;
 import co.edu.udea.kplus1.appuntesmobile.restclient.RestApiClient;
 import co.edu.udea.kplus1.appuntesmobile.service.MateriasServiceClient;
+import co.edu.udea.kplus1.appuntesmobile.service.temp.Datos;
 import co.edu.udea.kplus1.appuntesmobile.utils.LayoutManagerType;
 import co.edu.udea.kplus1.appuntesmobile.utils.StandardResponse;
 import co.edu.udea.kplus1.appuntesmobile.viewModel.MateriasViewModel;
@@ -79,7 +80,7 @@ public class MateriasPublicasFragment extends Fragment {
     private void consultarMaterias() {
 
         Call<StandardResponse<List<Materia>>> call = RestApiClient.getClient()
-                .create(MateriasServiceClient.class).obtenerMateriasPorEstudiante(6);
+                .create(MateriasServiceClient.class).obtenerMateriasPorEstudiante(Datos.getEstudianteSession());
         call.enqueue(new Callback<StandardResponse<List<Materia>>>() {
             @Override
             public void onResponse(Call<StandardResponse<List<Materia>>> call, Response<StandardResponse<List<Materia>>> response) {

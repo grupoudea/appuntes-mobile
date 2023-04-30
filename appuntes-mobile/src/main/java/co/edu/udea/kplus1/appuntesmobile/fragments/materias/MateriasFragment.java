@@ -3,9 +3,13 @@ package co.edu.udea.kplus1.appuntesmobile.fragments.materias;
 import static co.edu.udea.kplus1.appuntesmobile.utils.Constants.KEY_LAYOUT_MANAGER;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,20 +21,27 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import co.edu.udea.kplus1.appuntesmobile.R;
 import co.edu.udea.kplus1.appuntesmobile.databinding.MateriasFragmentBinding;
 import co.edu.udea.kplus1.appuntesmobile.model.Materia;
+import co.edu.udea.kplus1.appuntesmobile.restclient.RestApiClient;
+import co.edu.udea.kplus1.appuntesmobile.service.MateriasServiceClient;
 import co.edu.udea.kplus1.appuntesmobile.service.temp.Datos;
 import co.edu.udea.kplus1.appuntesmobile.utils.LayoutManagerType;
+import co.edu.udea.kplus1.appuntesmobile.utils.StandardResponse;
 import co.edu.udea.kplus1.appuntesmobile.viewModel.MateriasViewModel;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MateriasFragment extends Fragment {
 
     private MateriasFragmentBinding binding;
     private MateriasViewModel viewModel;
-    private List<Materia> materias;
+    private List<Materia> materias = new ArrayList<>();
     protected RecyclerView mRecyclerView;
     protected MateriaAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
@@ -40,7 +51,7 @@ public class MateriasFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        materias = consultarMaterias();
+        consultarMaterias("");
     }
 
     @Override
@@ -79,10 +90,49 @@ public class MateriasFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         binding.buttonCrearMateria.setOnClickListener(v -> NavHostFragment.findNavController(MateriasFragment.this)
                 .navigate(R.id.action_materiasFragment_to_materiasFormFragment));
+        initOnChangeBusqueda();
     }
 
-    private List<Materia> consultarMaterias() {
-        return Datos.getMaterias();
+    private void initOnChangeBusqueda() {
+        EditText editTextBuscar = (EditText) binding.getRoot().findViewById(R.id.editTextBuscar);
+
+        editTextBuscar.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                consultarMaterias(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+    }
+
+    private void consultarMaterias(String busqueda) {
+        Call<StandardResponse<List<Materia>>> call = RestApiClient.getClient()
+                .create(MateriasServiceClient.class).filtrarMateriasPorEstudiante(busqueda, Datos.getEstudianteSession());
+
+        call.enqueue(new Callback<StandardResponse<List<Materia>>>() {
+            @Override
+            public void onResponse(Call<StandardResponse<List<Materia>>> call, Response<StandardResponse<List<Materia>>> response) {
+                List<Materia> materiasList = response.body().getBody();
+                materias.clear();
+                materias.addAll(materiasList);
+                mAdapter = new MateriaAdapter(materias);
+                mRecyclerView.setAdapter(mAdapter);
+            }
+
+            @Override
+            public void onFailure(Call<StandardResponse<List<Materia>>> call, Throwable t) {
+                Toast.makeText(getActivity(), "ERROR" + t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void setBarTitle() {
