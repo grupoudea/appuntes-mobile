@@ -56,11 +56,11 @@ public class MateriaAdapter extends RecyclerView.Adapter<MateriaAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-        Log.d(TAG, "Element " + position + " set.");
+        Log.d(TAG, "onBindViewHolder Element " + position + " set.");
 
-        viewHolder.getTextViewNombreMateria().setText(getItem(position).getSubjectPensum().getName());
-        viewHolder.getTextViewNombreProfesor().setText(getItem(position).getSubjectPensum().getName());
-        viewHolder.getTextViewNota().setText(getItem(position).getSubjectPensum().getName());
+        viewHolder.getTextViewNombreMateria().setText(getItem(position).getMateriaUniversidad().getMateria());
+        viewHolder.getTextViewNombreProfesor().setText(getItem(position).getProfesor());
+        viewHolder.getTextViewNota().setText(String.valueOf(getItem(position).getCreditos()));
     }
 
     @Override

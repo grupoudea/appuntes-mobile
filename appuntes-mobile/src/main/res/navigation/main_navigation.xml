@@ -6,6 +6,7 @@
 
     <fragment
         android:id="@+id/materiasFragment"
+
         android:name="co.edu.udea.kplus1.appuntesmobile.fragments.materias.MateriasFragment"
         android:label="MateriasFragment"
         tools:layout="@layout/materias_fragment" >
@@ -18,4 +19,11 @@
         android:name="co.edu.udea.kplus1.appuntesmobile.fragments.materias.MateriasFormFragment"
         android:label="MateriasFormFragment"
         tools:layout="@layout/materias_form_fragment"/>
+    <fragment
+        android:id="@+id/materiasPublicasFragment"
+        android:name="co.edu.udea.kplus1.appuntesmobile.fragments.materiasPublicas.MateriasPublicasFragment"
+        android:label="Apuntes Publicas"
+        tools:layout="@layout/materias_publicas_fragment" />
+
+
 </navigation>
