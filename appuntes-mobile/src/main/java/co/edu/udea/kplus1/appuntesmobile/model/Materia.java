@@ -1,26 +1,23 @@
 package co.edu.udea.kplus1.appuntesmobile.model;
 
 public class Materia {
+
     private Integer id;
-    private Integer subjectPensumId;
-    private MateriaPensum subjectPensum;
-    private Integer semesterId;
-    private Semestre semester;
-    private Integer credits;
-    private String teacher;
-    private String status;
-    private Double finalGrade;
+    private Integer idMateriaFk;
+    private MateriaUniversidad materiaUniversidad;
+    private Integer idEstudianteFk;
+    private Estudiante estudiante;
+    private Integer creditos;
+    private String profesor;
 
-    public Materia() {
-    }
-
-    public Materia(Integer subjectPensumId, MateriaPensum subjectPensum, Integer semesterId, Integer credits, String teacher, Double finalGrade) {
-        this.subjectPensumId = subjectPensumId;
-        this.subjectPensum = subjectPensum;
-        this.semesterId = semesterId;
-        this.credits = credits;
-        this.teacher = teacher;
-        this.finalGrade = finalGrade;
+    public Materia(Integer id, Integer idMateriaFk, MateriaUniversidad materiaUniversidad, Integer idEstudianteFk, Estudiante estudiante, Integer creditos, String profesor) {
+        this.id = id;
+        this.idMateriaFk = idMateriaFk;
+        this.materiaUniversidad = materiaUniversidad;
+        this.idEstudianteFk = idEstudianteFk;
+        this.estudiante = estudiante;
+        this.creditos = creditos;
+        this.profesor = profesor;
     }
 
     public Integer getId() {
@@ -31,67 +28,51 @@ public class Materia {
         this.id = id;
     }
 
-    public Integer getSubjectPensumId() {
-        return subjectPensumId;
+    public Integer getIdMateriaFk() {
+        return idMateriaFk;
     }
 
-    public void setSubjectPensumId(Integer subjectPensumId) {
-        this.subjectPensumId = subjectPensumId;
+    public void setIdMateriaFk(Integer idMateriaFk) {
+        this.idMateriaFk = idMateriaFk;
     }
 
-    public MateriaPensum getSubjectPensum() {
-        return subjectPensum;
+    public MateriaUniversidad getMateriaUniversidad() {
+        return materiaUniversidad;
     }
 
-    public void setSubjectPensum(MateriaPensum subjectPensum) {
-        this.subjectPensum = subjectPensum;
+    public void setMateriaUniversidad(MateriaUniversidad materiaUniversidad) {
+        this.materiaUniversidad = materiaUniversidad;
     }
 
-    public Integer getSemesterId() {
-        return semesterId;
+    public Integer getIdEstudianteFk() {
+        return idEstudianteFk;
     }
 
-    public void setSemesterId(Integer semesterId) {
-        this.semesterId = semesterId;
+    public void setIdEstudianteFk(Integer idEstudianteFk) {
+        this.idEstudianteFk = idEstudianteFk;
     }
 
-    public Semestre getSemester() {
-        return semester;
+    public Estudiante getEstudiante() {
+        return estudiante;
     }
 
-    public void setSemester(Semestre semester) {
-        this.semester = semester;
+    public void setEstudiante(Estudiante estudiante) {
+        this.estudiante = estudiante;
     }
 
-    public Integer getCredits() {
-        return credits;
+    public Integer getCreditos() {
+        return creditos;
     }
 
-    public void setCredits(Integer credits) {
-        this.credits = credits;
+    public void setCreditos(Integer creditos) {
+        this.creditos = creditos;
     }
 
-    public String getTeacher() {
-        return teacher;
+    public String getProfesor() {
+        return profesor;
     }
 
-    public void setTeacher(String teacher) {
-        this.teacher = teacher;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public Double getFinalGrade() {
-        return finalGrade;
-    }
-
-    public void setFinalGrade(Double finalGrade) {
-        this.finalGrade = finalGrade;
+    public void setProfesor(String profesor) {
+        this.profesor = profesor;
     }
 }
