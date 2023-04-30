@@ -44,4 +44,9 @@ public class MateriaUniversidad {
     public void setNumeroPensum(Integer numeroPensum) {
         this.numeroPensum = numeroPensum;
     }
+
+    @Override
+    public String toString() {
+        return materia;
+    }
 }

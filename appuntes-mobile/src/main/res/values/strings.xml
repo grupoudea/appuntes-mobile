@@ -11,4 +11,5 @@
     <string name="creditos">Créditos</string>
     <string name="profesor">Profesor</string>
     <string name="buscar_materia_autocomplete">Buscar materia...</string>
+    <string name="mensaje_campo_requerido">Falta un campo requerido</string>
 </resources>
