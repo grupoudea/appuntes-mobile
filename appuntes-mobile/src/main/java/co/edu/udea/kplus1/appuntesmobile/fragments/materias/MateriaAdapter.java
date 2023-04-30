@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import co.edu.udea.kplus1.appuntesmobile.R;
@@ -16,7 +17,7 @@ import co.edu.udea.kplus1.appuntesmobile.model.Materia;
 public class MateriaAdapter extends RecyclerView.Adapter<MateriaAdapter.ViewHolder> {
 
     private static final String TAG = "MateriaAdapter";
-    private final List<Materia> materias;
+    private List<Materia> materias = new ArrayList<>();
 
     public MateriaAdapter(List<Materia> materias) {
         this.materias = materias;
