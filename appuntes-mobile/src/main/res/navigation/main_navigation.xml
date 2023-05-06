@@ -24,7 +24,11 @@
         android:id="@+id/materiasFormFragment"
         android:name="co.edu.udea.kplus1.appuntesmobile.fragments.materias.MateriasFormFragment"
         android:label="Materias"
-        tools:layout="@layout/materias_form_fragment" />
+        tools:layout="@layout/materias_form_fragment">
+        <action
+            android:id="@+id/action_materiasFormFragment_to_materiasFragment"
+            app:destination="@id/materiasFragment" />
+    </fragment>
     <fragment
         android:id="@+id/materiasPublicasFragment"
         android:name="co.edu.udea.kplus1.appuntesmobile.fragments.materiasPublicas.MateriasPublicasFragment"
