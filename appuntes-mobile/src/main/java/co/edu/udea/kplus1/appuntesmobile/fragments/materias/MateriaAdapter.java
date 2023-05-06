@@ -1,9 +1,12 @@
 package co.edu.udea.kplus1.appuntesmobile.fragments.materias;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.navigation.NavDirections;
@@ -29,6 +32,7 @@ public class MateriaAdapter extends RecyclerView.Adapter<MateriaAdapter.ViewHold
         private final TextView textViewNombreMateria;
         private final TextView textViewNombreProfesor;
         private final TextView textViewCreditos;
+        private final Button buttonMenuMateria;
 
         public ViewHolder(View v) {
             super(v);
@@ -46,6 +50,11 @@ public class MateriaAdapter extends RecyclerView.Adapter<MateriaAdapter.ViewHold
             textViewNombreMateria = v.findViewById(R.id.textViewNombreMateria);
             textViewNombreProfesor = v.findViewById(R.id.textViewNombreProfesor);
             textViewCreditos = v.findViewById(R.id.textViewCreditos);
+            buttonMenuMateria = v.findViewById(R.id.buttonMenuMateria);
+
+            buttonMenuMateria.setOnClickListener(view -> {
+                showMenu(view.getContext());
+            });
         }
 
         public TextView getTextViewNombreMateria() {
@@ -58,6 +67,26 @@ public class MateriaAdapter extends RecyclerView.Adapter<MateriaAdapter.ViewHold
 
         public TextView getTextViewCreditos() {
             return textViewCreditos;
+        }
+
+        public Button getButtonMenuMateria() {
+            return buttonMenuMateria;
+        }
+
+        private void showMenu(Context context) {
+            PopupMenu popup = new PopupMenu(context, buttonMenuMateria);
+            popup.getMenuInflater().inflate(R.menu.menu_opciones_materia, popup.getMenu());
+            popup.setOnMenuItemClickListener(item -> {
+                switch (item.getItemId()) {
+                    case R.id.menuEditar:
+                        return true;
+                    case R.id.menuEliminar:
+                        return true;
+                    default:
+                        return false;
+                }
+            });
+            popup.show();
         }
     }
 
