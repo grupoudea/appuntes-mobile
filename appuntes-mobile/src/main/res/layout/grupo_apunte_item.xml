@@ -12,7 +12,7 @@
         android:orientation="horizontal">
 
         <LinearLayout
-            android:id="@+id/linearLayoutMaterias"
+            android:id="@+id/linearLayoutGrupoApunte"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginStart="16dp"
@@ -20,7 +20,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textViewNombreMateria"
+                android:id="@+id/textViewNombreGrupoApunte"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
@@ -30,13 +30,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textViewNombreProfesor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/textViewCreditos"
+                android:id="@+id/textViewFechaGrupoApunte"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="14sp" />
@@ -44,7 +38,7 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/buttonMenuMateria"
+            android:id="@+id/buttonMenuGrupoApunte"
             android:layout_width="wrap_content"
             android:layout_height="60dp"
             android:layout_weight="1"

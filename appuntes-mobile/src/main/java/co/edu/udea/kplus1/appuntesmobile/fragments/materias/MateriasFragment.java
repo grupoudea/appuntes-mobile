@@ -5,6 +5,7 @@ import static co.edu.udea.kplus1.appuntesmobile.utils.Constants.KEY_LAYOUT_MANAG
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import co.edu.udea.kplus1.appuntesmobile.R;
 import co.edu.udea.kplus1.appuntesmobile.databinding.MateriasFragmentBinding;
@@ -39,6 +40,7 @@ import retrofit2.Response;
 
 public class MateriasFragment extends Fragment {
 
+    private static final String TAG = "MateriasFragment";
     private MateriasFragmentBinding binding;
     private MateriasViewModel viewModel;
     private List<Materia> materias = new ArrayList<>();
@@ -61,18 +63,20 @@ public class MateriasFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(MateriasViewModel.class);
         binding.setLifecycleOwner(getViewLifecycleOwner());
 
-        setBarTitle();
         buildReciclerView(savedInstanceState);
         return binding.getRoot();
     }
 
     public void buildReciclerView(Bundle savedInstanceState) {
-        mRecyclerView = binding.getRoot().findViewById(R.id.recyclerView);
+        mRecyclerView = binding.getRoot().findViewById(R.id.recyclerViewMaterias);
         mLayoutManager = new LinearLayoutManager(getActivity());
         mCurrentLayoutManagerType = LayoutManagerType.LINEAR_LAYOUT_MANAGER;
 
         if (savedInstanceState != null) {
             mCurrentLayoutManagerType = (LayoutManagerType) savedInstanceState.getSerializable(KEY_LAYOUT_MANAGER);
+        }
+        if (mCurrentLayoutManagerType == null) {
+            mCurrentLayoutManagerType = LayoutManagerType.LINEAR_LAYOUT_MANAGER;
         }
         setRecyclerViewLayoutManager(mCurrentLayoutManagerType);
         mAdapter = new MateriaAdapter(materias);
@@ -121,35 +125,32 @@ public class MateriasFragment extends Fragment {
         call.enqueue(new Callback<StandardResponse<List<Materia>>>() {
             @Override
             public void onResponse(Call<StandardResponse<List<Materia>>> call, Response<StandardResponse<List<Materia>>> response) {
-                List<Materia> materiasList = response.body().getBody();
-                materias.clear();
-                materias.addAll(materiasList);
+                if (Objects.nonNull(response) && Objects.nonNull(response.body()) && Objects.nonNull(response.body().getBody())) {
+                    List<Materia> materiasList = response.body().getBody();
+                    materias.clear();
+                    materias.addAll(materiasList);
+                }
                 mAdapter = new MateriaAdapter(materias);
-                mRecyclerView.setAdapter(mAdapter);
+                if (mRecyclerView != null) {
+                    mRecyclerView.setAdapter(mAdapter);
+                }
             }
 
             @Override
             public void onFailure(Call<StandardResponse<List<Materia>>> call, Throwable t) {
+                Log.i(TAG, "Error:" + t.getLocalizedMessage());
+                Log.i(TAG, "Error:" + t.fillInStackTrace());
                 Toast.makeText(getActivity(), "ERROR" + t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void setBarTitle() {
-        AppCompatActivity activity = (AppCompatActivity) getActivity();
-        if (activity != null) {
-            activity.setTitle(R.string.app_bar_materias);
-        }
-    }
-
     public void setRecyclerViewLayoutManager(LayoutManagerType layoutManagerType) {
         int scrollPosition = 0;
-
         if (mRecyclerView.getLayoutManager() != null) {
             scrollPosition = ((LinearLayoutManager) mRecyclerView.getLayoutManager())
                     .findFirstCompletelyVisibleItemPosition();
         }
-
         switch (layoutManagerType) {
             case GRID_LAYOUT_MANAGER:
                 mLayoutManager = new GridLayoutManager(getActivity(), SPAN_COUNT);
@@ -163,7 +164,6 @@ public class MateriasFragment extends Fragment {
                 mLayoutManager = new LinearLayoutManager(getActivity());
                 mCurrentLayoutManagerType = LayoutManagerType.LINEAR_LAYOUT_MANAGER;
         }
-
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.scrollToPosition(scrollPosition);
     }

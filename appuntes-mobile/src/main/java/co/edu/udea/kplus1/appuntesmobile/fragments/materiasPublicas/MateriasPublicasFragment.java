@@ -3,6 +3,7 @@ package co.edu.udea.kplus1.appuntesmobile.fragments.materiasPublicas;
 import static co.edu.udea.kplus1.appuntesmobile.utils.Constants.KEY_LAYOUT_MANAGER;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,7 @@ import retrofit2.Response;
 
 public class MateriasPublicasFragment extends Fragment {
 
+    private static final String TAG = "MateriasPublicasFragment";
     private MateriasPublicasFragmentBinding materiasPublicasFragmentBinding;
     private MateriasViewModel viewModel;
     protected RecyclerView mRecyclerView;
@@ -42,7 +44,6 @@ public class MateriasPublicasFragment extends Fragment {
     protected RecyclerView.LayoutManager mLayoutManager;
     protected LayoutManagerType mCurrentLayoutManagerType;
     private static final int SPAN_COUNT = 2;
-
 
     private List<Materia> materias = new ArrayList<>();
 
@@ -54,7 +55,6 @@ public class MateriasPublicasFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         materiasPublicasFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.materias_publicas_fragment, container, false);
 
         viewModel = new ViewModelProvider(this).get(MateriasViewModel.class);
@@ -95,6 +95,8 @@ public class MateriasPublicasFragment extends Fragment {
 
             @Override
             public void onFailure(Call<StandardResponse<List<Materia>>> call, Throwable t) {
+                Log.i(TAG, "Error:" + t.getLocalizedMessage());
+                Log.i(TAG, "Error:" + t.fillInStackTrace());
                 Toast.makeText(getActivity(), "ERROR" + t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -107,7 +109,6 @@ public class MateriasPublicasFragment extends Fragment {
             scrollPosition = ((LinearLayoutManager) mRecyclerView.getLayoutManager())
                     .findFirstCompletelyVisibleItemPosition();
         }
-
         switch (layoutManagerType) {
             case GRID_LAYOUT_MANAGER:
                 mLayoutManager = new GridLayoutManager(getActivity(), SPAN_COUNT);
@@ -117,7 +118,6 @@ public class MateriasPublicasFragment extends Fragment {
                 mLayoutManager = new LinearLayoutManager(getActivity());
                 mCurrentLayoutManagerType = LayoutManagerType.LINEAR_LAYOUT_MANAGER;
         }
-
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.scrollToPosition(scrollPosition);
     }

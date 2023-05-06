@@ -1,6 +1,8 @@
 package co.edu.udea.kplus1.appuntesmobile.model;
 
-public class Materia {
+import java.io.Serializable;
+
+public class Materia implements Serializable {
 
     private Integer id;
     private Integer idMateriaFk;
