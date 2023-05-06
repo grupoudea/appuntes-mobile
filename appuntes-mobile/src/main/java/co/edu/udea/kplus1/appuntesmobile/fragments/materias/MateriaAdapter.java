@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -30,7 +32,10 @@ public class MateriaAdapter extends RecyclerView.Adapter<MateriaAdapter.ViewHold
 
         public ViewHolder(View v) {
             super(v);
-            v.setOnClickListener(v1 -> Log.d(TAG, "Element " + getAdapterPosition() + " clicked."));
+            v.setOnClickListener(v1 -> {
+                NavDirections action = MateriasFragmentDirections.actionMateriasFragmentToGrupoApunteFragment();
+                Navigation.findNavController(v).navigate(action);
+            });
             textViewNombreMateria = v.findViewById(R.id.textViewNombreMateria);
             textViewNombreProfesor = v.findViewById(R.id.textViewNombreProfesor);
             textViewNota = v.findViewById(R.id.textViewNota);
