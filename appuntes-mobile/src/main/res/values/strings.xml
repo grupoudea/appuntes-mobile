@@ -12,6 +12,7 @@
     <string name="profesor">Profesor</string>
     <string name="buscar_materia_autocomplete">Buscar materia...</string>
     <string name="mensaje_campo_requerido">Falta un campo requerido</string>
+    <string name="titulo">Apuntes</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
