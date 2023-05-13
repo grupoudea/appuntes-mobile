@@ -7,6 +7,7 @@ import co.edu.udea.kplus1.appuntesmobile.model.MateriaUniversidad;
 import co.edu.udea.kplus1.appuntesmobile.utils.StandardResponse;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -31,4 +32,7 @@ public interface MateriasServiceClient {
 
     @PUT(MATERIAS_BASE + "/editar-materia")
     Call<StandardResponse<Materia>> editarMateria(@Body Materia materia);
+
+    @DELETE(MATERIAS_BASE + "/eliminar-materia-con-apuntes/{idMateria}")
+    Call<StandardResponse<Void>> eliminarMateria(@Path("idMateria") Integer idMateria);
 }

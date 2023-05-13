@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
@@ -83,18 +85,21 @@ public class MateriaAdapter extends RecyclerView.Adapter<MateriaAdapter.ViewHold
             PopupMenu popup = new PopupMenu(context, buttonMenuMateria);
             popup.getMenuInflater().inflate(R.menu.menu_opciones_materia, popup.getMenu());
             popup.setOnMenuItemClickListener(item -> {
+
+                int position = getAdapterPosition();
+                Materia materia = getItem(position);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("materia", materia);
+
                 switch (item.getItemId()) {
                     case R.id.menuEditar:
-                        int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
-                            Materia materia = getItem(position);
-                            Bundle bundle = new Bundle();
-                            bundle.putSerializable("materia", materia);
                             NavDirections action = MateriasFragmentDirections.actionMateriasFragmentToMateriasFormFragment(true, materia);
                             navController.navigate(action);
                         }
                         return true;
                     case R.id.menuEliminar:
+                        showMyDialogFragment(context, materia);
                         return true;
                     default:
                         return false;
@@ -108,6 +113,12 @@ public class MateriaAdapter extends RecyclerView.Adapter<MateriaAdapter.ViewHold
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.materia_item, viewGroup, false);
         return new ViewHolder(v);
+    }
+
+    private static void showMyDialogFragment(Context context, Materia materia) {
+        FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
+        ConfirmationDeleteMateriaFragment dialog = ConfirmationDeleteMateriaFragment.confirmationDeleteMateria(materia);
+        dialog.show(fragmentManager, "my_dialog");
     }
 
     @Override

@@ -70,14 +70,21 @@ public class MateriasFormFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         binding.buttonGuardar.setOnClickListener(v -> {
             if (esEditar) {
-                buildMateria(materia);
-                actualizarMateria(materia);
+                if (buildMateria(materia)) {
+                    actualizarMateria(materia);
+                    NavHostFragment
+                            .findNavController(MateriasFormFragment.this)
+                            .navigate(R.id.action_materiasFormFragment_to_materiasFragment);
+                }
             } else {
                 Materia materiaNew = new Materia();
-                buildMateria(materiaNew);
-                guardarNuevaMateria(materiaNew);
+                if (buildMateria(materiaNew)) {
+                    guardarNuevaMateria(materiaNew);
+                    NavHostFragment
+                            .findNavController(MateriasFormFragment.this)
+                            .navigate(R.id.action_materiasFormFragment_to_materiasFragment);
+                }
             }
-            NavHostFragment.findNavController(MateriasFormFragment.this).navigate(R.id.action_materiasFormFragment_to_materiasFragment);
         });
 
         if (getArguments() != null) {
@@ -149,14 +156,18 @@ public class MateriasFormFragment extends Fragment {
         }
     }
 
-    public void buildMateria(Materia materia) {
+    public boolean buildMateria(Materia materia) {
         if (!validateRequired(materiaSeleccionada)) {
-            return;
+            return false;
         }
         materia.setIdMateriaFk(materiaSeleccionada.getId());
         materia.setIdEstudianteFk(Datos.getEstudianteSession());
         materia.setCreditos(getCreditos());
+        if (!validateRequired(materia.getCreditos())) {
+            return false;
+        }
         materia.setProfesor(getProfesor());
+        return true;
     }
 
     private Integer getCreditos() {
