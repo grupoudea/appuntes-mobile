@@ -11,7 +11,14 @@
         tools:layout="@layout/materias_fragment">
         <action
             android:id="@+id/action_materiasFragment_to_materiasFormFragment"
-            app:destination="@id/materiasFormFragment" />
+            app:destination="@id/materiasFormFragment">
+            <argument
+                android:name="esEditar"
+                app:argType="boolean" />
+            <argument
+                android:name="materia"
+                app:argType="co.edu.udea.kplus1.appuntesmobile.model.Materia" />
+        </action>
         <action
             android:id="@+id/action_materiasFragment_to_grupoApunteFragment"
             app:destination="@id/grupoApunteFragment">

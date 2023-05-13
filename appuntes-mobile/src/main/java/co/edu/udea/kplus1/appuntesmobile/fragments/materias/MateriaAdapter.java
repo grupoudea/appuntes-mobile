@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
+import androidx.navigation.NavController;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,9 +24,15 @@ public class MateriaAdapter extends RecyclerView.Adapter<MateriaAdapter.ViewHold
 
     private static final String TAG = "MateriaAdapter";
     private static List<Materia> materias = new ArrayList<>();
+    private static NavController navController;
 
     public MateriaAdapter(List<Materia> materias) {
         MateriaAdapter.materias = materias;
+    }
+
+    public MateriaAdapter(List<Materia> materias, NavController navController) {
+        MateriaAdapter.materias = materias;
+        MateriaAdapter.navController = navController;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -37,7 +44,6 @@ public class MateriaAdapter extends RecyclerView.Adapter<MateriaAdapter.ViewHold
         public ViewHolder(View v) {
             super(v);
             v.setOnClickListener(v1 -> {
-
                 int position = getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION) {
                     Materia materia = getItem(position);
@@ -79,6 +85,14 @@ public class MateriaAdapter extends RecyclerView.Adapter<MateriaAdapter.ViewHold
             popup.setOnMenuItemClickListener(item -> {
                 switch (item.getItemId()) {
                     case R.id.menuEditar:
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            Materia materia = getItem(position);
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("materia", materia);
+                            NavDirections action = MateriasFragmentDirections.actionMateriasFragmentToMateriasFormFragment(true, materia);
+                            navController.navigate(action);
+                        }
                         return true;
                     case R.id.menuEliminar:
                         return true;

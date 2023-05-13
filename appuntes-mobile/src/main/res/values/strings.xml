@@ -13,4 +13,7 @@
     <string name="buscar_materia_autocomplete">Buscar materia...</string>
     <string name="mensaje_campo_requerido">Falta un campo requerido</string>
     <string name="mensaje_crear_materia_exito">La materia ha sido creada</string>
+    <string name="mensaje_crear_materia_error">La materia no fue creada</string>
+    <string name="mensaje_editar_materia_exito">La materia ha sido actualizada</string>
+    <string name="mensaje_editar_materia_error">La materia no fue actualizada</string>
 </resources>
