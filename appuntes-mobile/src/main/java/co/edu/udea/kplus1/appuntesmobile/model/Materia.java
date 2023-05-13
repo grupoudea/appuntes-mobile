@@ -11,6 +11,7 @@ public class Materia implements Serializable {
     private Estudiante estudiante;
     private Integer creditos;
     private String profesor;
+    private boolean isMenuOpen = false;
 
     public Materia() {
     }
@@ -79,5 +80,13 @@ public class Materia implements Serializable {
 
     public void setProfesor(String profesor) {
         this.profesor = profesor;
+    }
+
+    public boolean isMenuOpen() {
+        return isMenuOpen;
+    }
+
+    public void setMenuOpen(boolean menuOpen) {
+        isMenuOpen = menuOpen;
     }
 }

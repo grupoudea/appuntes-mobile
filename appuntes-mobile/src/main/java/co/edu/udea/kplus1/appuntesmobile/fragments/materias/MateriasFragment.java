@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -79,7 +80,8 @@ public class MateriasFragment extends Fragment {
             mCurrentLayoutManagerType = LayoutManagerType.LINEAR_LAYOUT_MANAGER;
         }
         setRecyclerViewLayoutManager(mCurrentLayoutManagerType);
-        mAdapter = new MateriaAdapter(materias);
+        NavController navController = NavHostFragment.findNavController(MateriasFragment.this);
+        mAdapter = new MateriaAdapter(materias, navController);
         mRecyclerView.setAdapter(mAdapter);
     }
 

@@ -12,6 +12,12 @@
     <string name="profesor">Profesor</string>
     <string name="buscar_materia_autocomplete">Buscar materia...</string>
     <string name="mensaje_campo_requerido">Falta un campo requerido</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="mensaje_crear_materia_exito">La materia ha sido creada</string>
+    <string name="mensaje_crear_materia_error">La materia no fue creada</string>
+    <string name="mensaje_editar_materia_exito">La materia ha sido actualizada</string>
+    <string name="mensaje_editar_materia_error">La materia no fue actualizada</string>
+    <string name="mensaje_eliminar_materia_exito">La materia ha sido eliminada</string>
+    <string name="dialog_confim_delete_materia">¿Está seguro de eliminar esta materia? Si la elimina se eliminarán todos los apuntes asociados</string>
+    <string name="delete">Eliminar</string>
+    <string name="cancel">Cancelar</string>
 </resources>
