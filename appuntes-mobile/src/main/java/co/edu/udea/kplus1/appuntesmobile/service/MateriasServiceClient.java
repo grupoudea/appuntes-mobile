@@ -16,10 +16,7 @@ import retrofit2.http.Query;
 
 public interface MateriasServiceClient {
 
-    public static final String MATERIAS_BASE = "materias";
-
-    @GET(MATERIAS_BASE + "/obtener-materias/{idEstudiante}")
-    Call<StandardResponse<List<Materia>>> obtenerMateriasPorEstudiante(@Path("idEstudiante") Integer idEstudiante);
+    String MATERIAS_BASE = "materias";
 
     @GET(MATERIAS_BASE + "/filtro-materias")
     Call<StandardResponse<List<Materia>>> filtrarMateriasPorEstudiante(@Query("busqueda") String busqueda, @Query("idEstudiante") Integer idEstudiante);

@@ -50,7 +50,7 @@ public class MateriasPublicasFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        consultarMaterias();
+        consultarMaterias("");
     }
 
     @Override
@@ -77,10 +77,10 @@ public class MateriasPublicasFragment extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    private void consultarMaterias() {
+    private void consultarMaterias(String busqueda) {
 
         Call<StandardResponse<List<Materia>>> call = RestApiClient.getClient()
-                .create(MateriasServiceClient.class).obtenerMateriasPorEstudiante(Datos.getEstudianteSession());
+                .create(MateriasServiceClient.class).filtrarMateriasPorEstudiante(busqueda, 6);
         call.enqueue(new Callback<StandardResponse<List<Materia>>>() {
             @Override
             public void onResponse(Call<StandardResponse<List<Materia>>> call, Response<StandardResponse<List<Materia>>> response) {

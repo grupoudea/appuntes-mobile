@@ -21,6 +21,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -31,7 +33,6 @@ import co.edu.udea.kplus1.appuntesmobile.model.GrupoApunte;
 import co.edu.udea.kplus1.appuntesmobile.model.Materia;
 import co.edu.udea.kplus1.appuntesmobile.restclient.RestApiClient;
 import co.edu.udea.kplus1.appuntesmobile.service.ApuntesServiceClient;
-import co.edu.udea.kplus1.appuntesmobile.service.temp.Datos;
 import co.edu.udea.kplus1.appuntesmobile.utils.LayoutManagerType;
 import co.edu.udea.kplus1.appuntesmobile.utils.StandardResponse;
 import retrofit2.Call;
@@ -74,6 +75,10 @@ public class GrupoApunteFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         if (getArguments() != null) {
             materia = (Materia) getArguments().getSerializable("materia");
+            if(materia.getIdEstudianteFk().equals(6)){
+                FloatingActionButton floatingActionButton = binding.getRoot().findViewById(R.id.buttonCrearGrupoApunte);
+                floatingActionButton.hide();
+            }
             setTituloMateria();
             consultarGruposApuntes("");
         }
@@ -118,10 +123,6 @@ public class GrupoApunteFragment extends Fragment {
                 mLayoutManager = new GridLayoutManager(getActivity(), SPAN_COUNT);
                 mCurrentLayoutManagerType = LayoutManagerType.GRID_LAYOUT_MANAGER;
                 break;
-            case LINEAR_LAYOUT_MANAGER:
-                mLayoutManager = new LinearLayoutManager(getActivity());
-                mCurrentLayoutManagerType = LayoutManagerType.LINEAR_LAYOUT_MANAGER;
-                break;
             default:
                 mLayoutManager = new LinearLayoutManager(getActivity());
                 mCurrentLayoutManagerType = LayoutManagerType.LINEAR_LAYOUT_MANAGER;
@@ -152,8 +153,11 @@ public class GrupoApunteFragment extends Fragment {
     }
 
     private void consultarGruposApuntes(String busqueda) {
+        Log.i(TAG, "buscando grupos de apuntes de la materia"
+                +materia.getMateriaUniversidad().getMateria()+" para el estudiante "
+                +materia.getEstudiante().getNombre());
         Call<StandardResponse<List<GrupoApunte>>> call = RestApiClient.getClient()
-                .create(ApuntesServiceClient.class).filtrarGrupoApuntesPorMateria(busqueda, materia.getId(), Datos.getEstudianteSession());
+                .create(ApuntesServiceClient.class).filtrarGrupoApuntesPorMateria(busqueda, materia.getId(), materia.getIdEstudianteFk());
 
         call.enqueue(new Callback<StandardResponse<List<GrupoApunte>>>() {
             @Override
