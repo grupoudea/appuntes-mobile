@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -73,9 +74,15 @@ public class GrupoApunteFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         if (getArguments() != null) {
             materia = (Materia) getArguments().getSerializable("materia");
+            setTituloMateria();
             consultarGruposApuntes("");
         }
         initOnChangeBusqueda();
+    }
+
+    private void setTituloMateria() {
+        TextView viewById = (TextView) binding.getRoot().findViewById(R.id.textViewTituloMateria);
+        viewById.setText(materia.getMateriaUniversidad().getMateria());
     }
 
     @Override
