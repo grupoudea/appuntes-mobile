@@ -71,7 +71,7 @@ public class ApunteFragment extends Fragment {
                 //Texto
                 String texto = mEditText.getText().toString().trim();
                 if (!texto.isEmpty()) {
-                    Apunte apunte = new Apunte(texto, new Date());
+                    Apunte apunte = new Apunte(texto, new Date(),null);
                     mApuntesList.add(apunte);
                     mApunteAdapter.notifyDataSetChanged();
                     mEditText.setText("");

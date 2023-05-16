@@ -2,23 +2,31 @@ package co.edu.udea.kplus1.appuntesmobile.fragments.grupoApuntes;
 
 import static co.edu.udea.kplus1.appuntesmobile.utils.Constants.KEY_LAYOUT_MANAGER;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +73,8 @@ public class GrupoApunteFragment extends Fragment {
         binding.setLifecycleOwner(getViewLifecycleOwner());
 
         buildReciclerView(savedInstanceState);
+
+
         return binding.getRoot();
     }
 
@@ -76,7 +86,57 @@ public class GrupoApunteFragment extends Fragment {
             consultarGruposApuntes("");
         }
         initOnChangeBusqueda();
+        FloatingActionButton buttonCrearGrupoApunte = view.findViewById(R.id.buttonCrearGrupoApunte);
+        buttonCrearGrupoApunte.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.apuntes_layout);
+            }
+        });
+        Button buttonMenuGrupoApunte = view.findViewById(R.id.buttonMenuGrupoApunte);
+        buttonMenuGrupoApunte.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPopupMenu(v);
+            }
+        });
     }
+
+    public void showPopupMenu(View view) {
+        Context context = view.getContext();
+        PopupMenu popupMenu = new PopupMenu(context, view);
+        MenuInflater inflater = popupMenu.getMenuInflater();
+        inflater.inflate(R.menu.popup_menu, popupMenu.getMenu());
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                // Manejar la opción seleccionada del menú desplegable
+                switch (item.getItemId()) {
+                    case R.id.option1:
+                        eliminarElemento();
+                        return true;
+                    case R.id.option2:
+                        // Acción para la opción 2
+                        return true;
+                    case R.id.option3:
+                        // Acción para la opción 3
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        });
+        popupMenu.show();
+    }
+
+    private void eliminarElemento() {
+       if (!grupoApuntes.isEmpty()) {
+            grupoApuntes.remove(0);
+            grupoApunteAdapter.notifyDataSetChanged(); // Actualizar la vista después de eliminar el elemento
+        }
+    }
+
+
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
