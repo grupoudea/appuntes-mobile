@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -83,6 +84,7 @@ public class GrupoApunteFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         if (getArguments() != null) {
             materia = (Materia) getArguments().getSerializable("materia");
+            setTituloMateria();
             consultarGruposApuntes("");
         }
         initOnChangeBusqueda();
@@ -101,6 +103,7 @@ public class GrupoApunteFragment extends Fragment {
             }
         });
     }
+
 
     public void showPopupMenu(View view) {
         Context context = view.getContext();
@@ -136,6 +139,13 @@ public class GrupoApunteFragment extends Fragment {
         }
     }
 
+
+
+
+    private void setTituloMateria() {
+        TextView viewById = (TextView) binding.getRoot().findViewById(R.id.textViewTituloMateria);
+        viewById.setText(materia.getMateriaUniversidad().getMateria());
+    }
 
 
     @Override
