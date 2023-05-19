@@ -61,10 +61,13 @@ public class MateriasFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.materias_fragment, container, false);
 
-        viewModel = new ViewModelProvider(this).get(MateriasViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity()).get(MateriasViewModel.class);
         binding.setLifecycleOwner(getViewLifecycleOwner());
 
         buildReciclerView(savedInstanceState);
+
+        viewModel.get().observe(getViewLifecycleOwner(), newData -> consultarMaterias(""));
+
         return binding.getRoot();
     }
 
