@@ -8,13 +8,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import co.edu.udea.kplus1.appuntesmobile.R;
 import co.edu.udea.kplus1.appuntesmobile.model.Materia;
 import co.edu.udea.kplus1.appuntesmobile.restclient.RestApiClient;
 import co.edu.udea.kplus1.appuntesmobile.service.MateriasServiceClient;
 import co.edu.udea.kplus1.appuntesmobile.utils.StandardResponse;
+import co.edu.udea.kplus1.appuntesmobile.viewModel.MateriasViewModel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -24,6 +28,7 @@ public class ConfirmationDeleteMateriaFragment extends DialogFragment {
     private static final String TAG = "ConfirmationDeleteMateriaFragment";
 
     private Materia materia;
+    private MateriasViewModel viewModel;
 
     public ConfirmationDeleteMateriaFragment() {
 
@@ -62,7 +67,15 @@ public class ConfirmationDeleteMateriaFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_confirmation_delete_materia, container, false);
+
+        ViewDataBinding binding = DataBindingUtil.inflate(inflater, R.layout.materias_form_fragment, container, false);
+
+        binding.setLifecycleOwner(getViewLifecycleOwner());
+
+        viewModel = new ViewModelProvider(requireActivity()).get(MateriasViewModel.class);
+        binding.setLifecycleOwner(getViewLifecycleOwner());
+
+        return binding.getRoot();
     }
 
     private void eliminarMateria(Materia materia) {
@@ -72,7 +85,7 @@ public class ConfirmationDeleteMateriaFragment extends DialogFragment {
         call.enqueue(new Callback<StandardResponse<Void>>() {
             @Override
             public void onResponse(Call<StandardResponse<Void>> call, Response<StandardResponse<Void>> response) {
-
+                viewModel.set(new Materia());
             }
 
             @Override

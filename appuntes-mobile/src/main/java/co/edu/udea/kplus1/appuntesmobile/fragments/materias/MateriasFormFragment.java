@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ import co.edu.udea.kplus1.appuntesmobile.restclient.RestApiClient;
 import co.edu.udea.kplus1.appuntesmobile.service.MateriasServiceClient;
 import co.edu.udea.kplus1.appuntesmobile.service.temp.Datos;
 import co.edu.udea.kplus1.appuntesmobile.utils.StandardResponse;
+import co.edu.udea.kplus1.appuntesmobile.viewModel.MateriasViewModel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -36,6 +38,7 @@ public class MateriasFormFragment extends Fragment {
     private static final String TAG = "MateriasFormFragment";
 
     private MateriasFormFragmentBinding binding;
+    private MateriasViewModel viewModel;
     private List<MateriaUniversidad> materiasUniversidad = new ArrayList<>();
     private AutoCompleteTextView autoCompleteMateriasUniversidad;
     private ArrayAdapter<MateriaUniversidad> adaptadorMateriasUniversidad;
@@ -59,6 +62,9 @@ public class MateriasFormFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.materias_form_fragment, container, false);
 
+        binding.setLifecycleOwner(getViewLifecycleOwner());
+
+        viewModel = new ViewModelProvider(requireActivity()).get(MateriasViewModel.class);
         binding.setLifecycleOwner(getViewLifecycleOwner());
 
         initEvents();
@@ -199,6 +205,7 @@ public class MateriasFormFragment extends Fragment {
             public void onResponse(Call<StandardResponse<Materia>> call, Response<StandardResponse<Materia>> response) {
                 if (Objects.nonNull(response) && Objects.nonNull(response.body()) && Objects.nonNull(response.body().getBody())) {
                     Materia materiaResponse = response.body().getBody();
+                    viewModel.set(materiaResponse);
                     Toast.makeText(getActivity(), R.string.mensaje_crear_materia_exito, Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(getActivity(), R.string.mensaje_crear_materia_error, Toast.LENGTH_SHORT).show();
@@ -223,6 +230,7 @@ public class MateriasFormFragment extends Fragment {
             public void onResponse(Call<StandardResponse<Materia>> call, Response<StandardResponse<Materia>> response) {
                 if (Objects.nonNull(response) && Objects.nonNull(response.body()) && Objects.nonNull(response.body().getBody())) {
                     Materia materiaResponse = response.body().getBody();
+                    viewModel.set(materiaResponse);
                     Toast.makeText(getActivity(), R.string.mensaje_editar_materia_exito, Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(getActivity(), R.string.mensaje_editar_materia_error, Toast.LENGTH_SHORT).show();
