@@ -1,6 +1,4 @@
 <resources>
-
-
     <string name="app_name">Appuntes</string>
     <string name="app_bar_materias">Subjects</string>
     <string name="submit">Create</string>
@@ -25,6 +23,5 @@
     <string name="editar">Edit</string>
     <string name="mensaje_guardar_apunte_exito">the note was saved</string>
     <string name="mensaje_guardar_apunte_error">the note wasn\'t saved</string>
-    <string name="titulo_apuntes">Apuntes</string>
-
+    <string name="titulo_apuntes">Notes</string>
 </resources>

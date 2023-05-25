@@ -25,5 +25,4 @@
     <string name="mensaje_guardar_apunte_exito">El apunte se guardo</string>
     <string name="mensaje_guardar_apunte_error">El apunte no se guardo</string>
     <string name="editar">Editar</string>
-
 </resources>

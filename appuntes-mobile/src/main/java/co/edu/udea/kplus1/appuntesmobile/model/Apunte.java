@@ -10,7 +10,7 @@ public class Apunte {
     private Integer id;
     private Integer idGrupoApunte;
     private GrupoApunte grupoApunte;
-    private LocalDateTime fechaCreacion;
+    private String fechaCreacion;
     private String titulo;
     private String contenido;
     private String tipoContenido;
@@ -44,11 +44,11 @@ public class Apunte {
         this.grupoApunte = grupoApunte;
     }
 
-    public LocalDateTime getFechaCreacion() {
+    public String getFechaCreacion() {
         return fechaCreacion;
     }
 
-    public void setFechaCreacion(LocalDateTime fechaCreacion) {
+    public void setFechaCreacion(String fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
 

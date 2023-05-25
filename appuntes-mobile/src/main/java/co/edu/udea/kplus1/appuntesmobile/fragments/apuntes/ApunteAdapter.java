@@ -60,5 +60,4 @@ public class ApunteAdapter extends RecyclerView.Adapter<ApunteAdapter.ApunteView
 
         }
     }
-
 }

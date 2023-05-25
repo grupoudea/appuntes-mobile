@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,14 +23,10 @@ import co.edu.udea.kplus1.appuntesmobile.R;
 import co.edu.udea.kplus1.appuntesmobile.databinding.FragmentApunteBinding;
 import co.edu.udea.kplus1.appuntesmobile.model.Apunte;
 import co.edu.udea.kplus1.appuntesmobile.model.GrupoApunte;
-import co.edu.udea.kplus1.appuntesmobile.model.Materia;
-import co.edu.udea.kplus1.appuntesmobile.model.MateriaUniversidad;
 import co.edu.udea.kplus1.appuntesmobile.restclient.RestApiClient;
 import co.edu.udea.kplus1.appuntesmobile.service.ApuntesServiceClient;
-import co.edu.udea.kplus1.appuntesmobile.service.MateriasServiceClient;
 import co.edu.udea.kplus1.appuntesmobile.utils.StandardResponse;
 import co.edu.udea.kplus1.appuntesmobile.viewModel.ApunteViewModel;
-import co.edu.udea.kplus1.appuntesmobile.viewModel.MateriasViewModel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -46,9 +43,8 @@ public class ApunteFragment extends Fragment {
     private ImageButton mSendButton;
     private List<Apunte> mApuntesList = new ArrayList<>();
     private ApunteAdapter mApunteAdapter;
-
     private GrupoApunte grupoApunte;
-    private List<GrupoApunte> grupoApuntes = new ArrayList<>();
+    private List<Apunte> apuntes = new ArrayList<>();
 
     public ApunteFragment() {
 
@@ -73,6 +69,9 @@ public class ApunteFragment extends Fragment {
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(mApunteAdapter);
 
+        viewModel = new ViewModelProvider(requireActivity()).get(ApunteViewModel.class);
+        viewModel.get().observe(getViewLifecycleOwner(), newData -> consultarApuntes(""));
+
         // Set click listeners for buttons
         mCameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,7 +90,7 @@ public class ApunteFragment extends Fragment {
         mSendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Apunte apunte=new Apunte(grupoApunte.getId(),mEditText.getText().toString());
+                Apunte apunte = new Apunte(grupoApunte.getId(), mEditText.getText().toString());
                 guardarApunte(apunte);
                 mEditText.getText().clear();
             }
@@ -99,15 +98,16 @@ public class ApunteFragment extends Fragment {
 
         return view;
     }
+
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (getArguments() != null) {
             grupoApunte = (GrupoApunte) getArguments().getSerializable("GrupoApunte");
-            consultarGruposApuntes("");
+            consultarApuntes("");
         }
-
     }
+
     private void guardarApunte(Apunte apunte) {
         Call<StandardResponse<Apunte>> call = RestApiClient.getClient()
                 .create(ApuntesServiceClient.class).guardarApunte(apunte);
@@ -132,28 +132,28 @@ public class ApunteFragment extends Fragment {
             }
         });
     }
-    private void consultarGruposApuntes(String apunte) {
-        Call<StandardResponse<List<GrupoApunte>>> call = RestApiClient.getClient()
-                .create(ApuntesServiceClient.class).buscarGrupoApunte(apunte);
 
-        call.enqueue(new Callback<StandardResponse<List<GrupoApunte>>>() {
+    private void consultarApuntes(String apunte) {
+        Call<StandardResponse<List<Apunte>>> call = RestApiClient.getClient()
+                .create(ApuntesServiceClient.class).buscarApuntesPorFiltro(apunte, grupoApunte.getId());
+
+        call.enqueue(new Callback<StandardResponse<List<Apunte>>>() {
             @Override
-            public void onResponse(Call<StandardResponse<List<GrupoApunte>>> call, Response<StandardResponse<List<GrupoApunte>>> response) {
+            public void onResponse(Call<StandardResponse<List<Apunte>>> call, Response<StandardResponse<List<Apunte>>> response) {
                 if (Objects.nonNull(response) && Objects.nonNull(response.body()) && Objects.nonNull(response.body().getBody())) {
-                    List<GrupoApunte> grupoApuntesList = response.body().getBody();
-                    grupoApuntes.clear();
-                    grupoApuntes.addAll(grupoApuntesList);
+                    List<Apunte> apunteList = response.body().getBody();
+                    apuntes.clear();
+                    apuntes.addAll(apunteList);
                 }
             }
 
             @Override
-            public void onFailure(Call<StandardResponse<List<GrupoApunte>>> call, Throwable t) {
+            public void onFailure(Call<StandardResponse<List<Apunte>>> call, Throwable t) {
                 Log.i(TAG, "Error:" + t.getLocalizedMessage());
                 Log.i(TAG, "Error:" + t.fillInStackTrace());
                 Toast.makeText(getActivity(), "ERROR" + t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
-        
 }
 
