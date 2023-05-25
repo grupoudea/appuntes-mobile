@@ -26,7 +26,7 @@ public interface ApuntesServiceClient {
     Call<StandardResponse<Apunte>> guardarApunte(@Body Apunte apunte);
 
     @GET(APUNTES_BASE + "/filtro-apuntes")
-    Call<StandardResponse<List<Apunte>>> buscarApuntesPorFiltro(@Query("busqueda") String busqueda,
+    Call<StandardResponse<List<Apunte>>> buscarApuntesPorFiltro(@Query("apunte") String apunte,
                                                                 @Query("idGrupoApunte") Integer idGrupoApunte);
 
     @DELETE(APUNTES_BASE + "/eliminar-grupos-apuntes/{idGrupoApuntes}")

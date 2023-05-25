@@ -20,6 +20,10 @@ public class Apunte {
         this.contenido = contenido;
     }
 
+    public Apunte( ){
+
+    }
+
     public Integer getId() {
         return id;
     }
@@ -75,6 +79,20 @@ public class Apunte {
     public void setTipoContenido(String tipoContenido) {
         this.tipoContenido = tipoContenido;
     }
+
+    @Override
+    public String toString() {
+        return "Apunte{" +
+                "id=" + id +
+                ", idGrupoApunte=" + idGrupoApunte +
+                ", grupoApunte=" + grupoApunte +
+                ", fechaCreacion='" + fechaCreacion + '\'' +
+                ", titulo='" + titulo + '\'' +
+                ", contenido='" + contenido + '\'' +
+                ", tipoContenido='" + tipoContenido + '\'' +
+                '}';
+    }
 }
+
 
 
