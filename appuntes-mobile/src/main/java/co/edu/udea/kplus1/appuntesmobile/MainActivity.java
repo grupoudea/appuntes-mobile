@@ -1,5 +1,7 @@
 package co.edu.udea.kplus1.appuntesmobile;
 
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
@@ -7,12 +9,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import android.os.Bundle;
-import android.view.View;
-import android.view.WindowManager;
-
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 
 import co.edu.udea.kplus1.appuntesmobile.databinding.ActivityMainBinding;
 
@@ -22,18 +19,16 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
 
-   @Override
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setSupportActionBar(binding.appBarMain.toolbar);
         setupAppBar();
-
-
     }
 
-    private void setupAppBar(){
+    private void setupAppBar() {
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
         mAppBarConfiguration = new AppBarConfiguration.Builder(
