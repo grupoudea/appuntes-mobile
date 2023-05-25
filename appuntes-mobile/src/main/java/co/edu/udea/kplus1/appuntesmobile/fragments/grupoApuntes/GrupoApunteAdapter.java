@@ -1,17 +1,22 @@
 package co.edu.udea.kplus1.appuntesmobile.fragments.grupoApuntes;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import co.edu.udea.kplus1.appuntesmobile.R;
+import co.edu.udea.kplus1.appuntesmobile.fragments.materias.MateriasFragmentDirections;
 import co.edu.udea.kplus1.appuntesmobile.model.GrupoApunte;
+import co.edu.udea.kplus1.appuntesmobile.model.Materia;
 
 public class GrupoApunteAdapter extends RecyclerView.Adapter<GrupoApunteAdapter.ViewHolder> {
 
@@ -32,8 +37,13 @@ public class GrupoApunteAdapter extends RecyclerView.Adapter<GrupoApunteAdapter.
 
                 int position = getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION) {
-                    //TODO REDIRIGIR AL CHAT DE APUNTES
+                    GrupoApunte grupoApunte = getItem(position);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("GrupoApunte", grupoApunte);
+                    NavDirections action = co.edu.udea.kplus1.appuntesmobile.fragments.grupoApuntes.GrupoApunteFragmentDirections.actionGrupoApunteFragmentToFragmentApunte(grupoApunte);
+                    Navigation.findNavController(v).navigate(action);
                 }
+
             });
             textViewNombreGrupoApunte = v.findViewById(R.id.textViewNombreGrupoApunte);
             textViewFechaGrupoApunte = v.findViewById(R.id.textViewFechaGrupoApunte);

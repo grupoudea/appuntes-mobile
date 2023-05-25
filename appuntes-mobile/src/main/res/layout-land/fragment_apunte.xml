@@ -11,7 +11,7 @@
         android:layout_width="705dp"
         android:layout_height="57dp"
         android:layout_marginTop="12dp"
-        android:text="@string/titulo"
+        android:text="@string/titulo_apuntes"
         android:textSize="48sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,7 +47,7 @@
 
         <EditText
             android:id="@+id/editText"
-            android:layout_width="234dp"
+            android:layout_width="235dp"
             android:layout_height="59dp"
             android:background="@null"
             android:inputType="textMultiLine"

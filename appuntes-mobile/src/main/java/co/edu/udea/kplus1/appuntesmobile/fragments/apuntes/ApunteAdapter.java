@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import co.edu.udea.kplus1.appuntesmobile.R;
+import co.edu.udea.kplus1.appuntesmobile.model.Apunte;
 
 public class ApunteAdapter extends RecyclerView.Adapter<ApunteAdapter.ApunteViewHolder> {
 
@@ -51,14 +52,13 @@ public class ApunteAdapter extends RecyclerView.Adapter<ApunteAdapter.ApunteView
             mTextViewTexto = itemView.findViewById(R.id.editText);
             mTextViewFecha = itemView.findViewById(R.id.editText);
             mImageView = itemView.findViewById(R.id.imageView);
+
         }
 
         public void bind(Apunte apunte) {
-            mTextViewTexto.setText(apunte.getTexto());
-            mTextViewFecha.setText((CharSequence) apunte.getFecha());
-            if (apunte.getFoto() != null) {
-                mImageView.setImageBitmap(apunte.getFoto());
-            }
+            mTextViewTexto.setText(apunte.getContenido());
+
         }
     }
+
 }
