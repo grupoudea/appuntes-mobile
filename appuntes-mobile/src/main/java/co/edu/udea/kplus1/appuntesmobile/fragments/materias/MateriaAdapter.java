@@ -82,7 +82,7 @@ public class MateriaAdapter extends RecyclerView.Adapter<MateriaAdapter.ViewHold
         }
 
         private void showMenu(Context context) {
-            PopupMenu popup = new PopupMenu(context, buttonMenuMateria);
+            PopupMenu popup = new PopupMenu(context, getButtonMenuMateria());
             popup.getMenuInflater().inflate(R.menu.menu_opciones_materia, popup.getMenu());
             popup.setOnMenuItemClickListener(item -> {
 
@@ -92,13 +92,13 @@ public class MateriaAdapter extends RecyclerView.Adapter<MateriaAdapter.ViewHold
                 bundle.putSerializable("materia", materia);
 
                 switch (item.getItemId()) {
-                    case R.id.menuEditar:
+                    case R.id.menuEditarMateria:
                         if (position != RecyclerView.NO_POSITION) {
                             NavDirections action = MateriasFragmentDirections.actionMateriasFragmentToMateriasFormFragment(true, materia);
                             navController.navigate(action);
                         }
                         return true;
-                    case R.id.menuEliminar:
+                    case R.id.menuEliminarMateria:
                         showMyDialogFragment(context, materia);
                         return true;
                     default:

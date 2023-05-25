@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">appuntes-mobile</string>
+    <string name="app_name">Appuntes</string>
     <string name="app_bar_materias">Materias</string>
     <string name="submit">crear</string>
     <string name="crear_materia">Crear materia</string>
     <string name="guardar">Guardar</string>
     <string name="item1">Apuntes publicos</string>
-    <string name="item2">item2</string>
     <string name="buscar">Buscar</string>
     <string name="buscar_materia">Buscar materia</string>
     <string name="creditos">Créditos</string>
     <string name="profesor">Profesor</string>
-    <string name="buscar_materia_autocomplete">Buscar materia...</string>
+    <string name="buscar_materia_autocomplete">Buscar materia…</string>
     <string name="mensaje_campo_requerido">Falta un campo requerido</string>
     <string name="titulo_apuntes">Apuntes</string>
     <string name="mensaje_crear_materia_exito">La materia ha sido creada</string>
@@ -20,8 +19,11 @@
     <string name="mensaje_editar_materia_error">La materia no fue actualizada</string>
     <string name="mensaje_eliminar_materia_exito">La materia ha sido eliminada</string>
     <string name="dialog_confim_delete_materia">¿Está seguro de eliminar esta materia? Si la elimina se eliminarán todos los apuntes asociados</string>
+    <string name="dialog_confim_delete_grupo_apunte">¿Está seguro de eliminar este grupo de apuntes? Si lo elimina se eliminarán todos los apuntes asociados</string>
     <string name="delete">Eliminar</string>
     <string name="cancel">Cancelar</string>
     <string name="mensaje_guardar_apunte_exito">El apunte se guardo</string>
     <string name="mensaje_guardar_apunte_error">El apunte no se guardo</string>
+    <string name="editar">Editar</string>
+
 </resources>
