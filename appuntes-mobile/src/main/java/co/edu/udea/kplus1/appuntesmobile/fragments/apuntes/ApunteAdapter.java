@@ -7,16 +7,27 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.NavController;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import co.edu.udea.kplus1.appuntesmobile.R;
+import co.edu.udea.kplus1.appuntesmobile.fragments.materias.MateriaAdapter;
 import co.edu.udea.kplus1.appuntesmobile.model.Apunte;
+import co.edu.udea.kplus1.appuntesmobile.model.Materia;
 
 public class ApunteAdapter extends RecyclerView.Adapter<ApunteAdapter.ApunteViewHolder> {
 
-    private List<Apunte> mApuntesList;
+    private List<Apunte> mApuntesList=new ArrayList<>();
+    private static List<Apunte> apuntes = new ArrayList<>();
+    private static NavController navController;
+    public ApunteAdapter(List<Apunte> apuntes, NavController navController) {
+        ApunteAdapter.apuntes = apuntes;
+        ApunteAdapter.navController = navController;
+    }
+
 
     public ApunteAdapter(List<Apunte> apuntesList) {
         mApuntesList = apuntesList;
@@ -46,6 +57,8 @@ public class ApunteAdapter extends RecyclerView.Adapter<ApunteAdapter.ApunteView
         private TextView mTextViewTexto;
         private TextView mTextViewFecha;
         private ImageView mImageView;
+
+
 
         public ApunteViewHolder(@NonNull View itemView) {
             super(itemView);
