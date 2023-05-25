@@ -1,10 +1,16 @@
 package co.edu.udea.kplus1.appuntesmobile.fragments.grupoApuntes;
 
+import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -25,6 +31,7 @@ public class GrupoApunteAdapter extends RecyclerView.Adapter<GrupoApunteAdapter.
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView textViewNombreGrupoApunte;
         private final TextView textViewFechaGrupoApunte;
+        private final Button buttonMenuGrupoApunte;
 
         public ViewHolder(View v) {
             super(v);
@@ -37,6 +44,11 @@ public class GrupoApunteAdapter extends RecyclerView.Adapter<GrupoApunteAdapter.
             });
             textViewNombreGrupoApunte = v.findViewById(R.id.textViewNombreGrupoApunte);
             textViewFechaGrupoApunte = v.findViewById(R.id.textViewFechaGrupoApunte);
+            buttonMenuGrupoApunte = v.findViewById(R.id.buttonMenuGrupoApunte);
+
+            buttonMenuGrupoApunte.setOnClickListener(view -> {
+                showMenu(view.getContext());
+            });
         }
 
         public TextView getTextViewNombreGrupoApunte() {
@@ -45,6 +57,31 @@ public class GrupoApunteAdapter extends RecyclerView.Adapter<GrupoApunteAdapter.
 
         public TextView getTextViewFechaGrupoApunte() {
             return textViewFechaGrupoApunte;
+        }
+
+        public Button getButtonMenuGrupoApunte() {
+            return buttonMenuGrupoApunte;
+        }
+
+        private void showMenu(Context context) {
+            PopupMenu popup = new PopupMenu(context, getButtonMenuGrupoApunte());
+            popup.getMenuInflater().inflate(R.menu.menu_opciones_grupo_apunte, popup.getMenu());
+            popup.setOnMenuItemClickListener(item -> {
+
+                int position = getAdapterPosition();
+                GrupoApunte grupoApunte = getItem(position);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("grupoApunte", grupoApunte);
+
+                switch (item.getItemId()) {
+                    case R.id.menuEliminarGrupoApunte:
+                        showMyDialogFragment(context, grupoApunte);
+                        return true;
+                    default:
+                        return false;
+                }
+            });
+            popup.show();
         }
     }
 
@@ -67,6 +104,12 @@ public class GrupoApunteAdapter extends RecyclerView.Adapter<GrupoApunteAdapter.
 
     public static GrupoApunte getItem(int position) {
         return grupoApuntes.get(position);
+    }
+
+    private static void showMyDialogFragment(Context context, GrupoApunte grupoApunte) {
+        FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
+        ConfirmationDeleteGrupoApunteFragment dialog = ConfirmationDeleteGrupoApunteFragment.confirmationDeleteGrupoApunteFragment(grupoApunte);
+        dialog.show(fragmentManager, "my_dialog");
     }
 
 }
