@@ -85,7 +85,7 @@ public class ApunteFragment extends Fragment {
         viewModel.get().observe(getViewLifecycleOwner(), newData -> consultarApuntes(""));
 
         mRecyclerView = view.findViewById(R.id.cyclerViewApuntes);
-        mEditText = view.findViewById(R.id.editText);
+        mEditText = binding.getRoot().findViewById(R.id.editText);
         mCameraButton = view.findViewById(R.id.cameraButton);
         mMicButton = view.findViewById(R.id.micButton);
         mSendButton = view.findViewById(R.id.sendButton);

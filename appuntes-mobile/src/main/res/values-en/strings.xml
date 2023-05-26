@@ -29,4 +29,6 @@
     <string name="mensaje_crear_grupo_error">The group has not been created</string>
     <string name="nombre_grupo_apunte">Group name notes</string>
     <string name="escribir_apunte">Type in…</string>
+    <string name="share">Share</string>
+    <string name="publish">Publish</string>
 </resources>

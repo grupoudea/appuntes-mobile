@@ -2,10 +2,11 @@ package co.edu.udea.kplus1.appuntesmobile.model;
 
 import android.graphics.Bitmap;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-public class Apunte {
+public class Apunte implements Serializable {
 
     private Integer id;
     private Integer idGrupoApunte;
