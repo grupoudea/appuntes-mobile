@@ -1,5 +1,6 @@
 package co.edu.udea.kplus1.appuntesmobile;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -27,6 +28,9 @@ public class LoginActivity extends AppCompatActivity {
     private  EditText usuario;
     private EditText contrasena;
 
+    private ProgressDialog progressDialog;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,11 +52,31 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    private void showProgressDialog(String message) {
+        if (progressDialog == null) {
+            progressDialog = new ProgressDialog(LoginActivity.this);
+            progressDialog.setMessage(message);
+            progressDialog.setIndeterminate(true);
+            progressDialog.setCancelable(false);
+        }else{
+            progressDialog.setMessage(message);
+            progressDialog.show();
+        }
+    }
+
+    private void hideProgressDialog() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+    }
+
+
     public void iniciarSesionOnClick(View view) {
         final String usuarioIngresado = usuario.getText().toString().trim();
         final String contrasenaIngresada = contrasena.getText().toString().trim();
 
         if(camposVacios(usuarioIngresado, contrasenaIngresada)) {
+            showProgressDialog("Iniciando sesión...");
             iniciarSesion(usuarioIngresado, contrasenaIngresada);
         }
     }
@@ -61,18 +85,20 @@ public class LoginActivity extends AppCompatActivity {
         Usuario usuario = new Usuario();
         usuario.setNombreUsuario(usuarioIngresado);
         usuario.setPassword(contrasenaIngresada);
-
         Call<StandardResponse<Usuario>> usuarioAutenticado = RestApiClient.getClient()
                         .create(UsuariosServiceClient.class).iniciarSesion(usuario);
 
         usuarioAutenticado.enqueue(new Callback<StandardResponse<Usuario>>() {
             @Override
             public void onResponse(Call<StandardResponse<Usuario>> call, Response<StandardResponse<Usuario>> response) {
+                hideProgressDialog();
                 validarOnResponse(call, response);
             }
 
             @Override
             public void onFailure(Call<StandardResponse<Usuario>> call, Throwable t) {
+                hideProgressDialog();
+
                 Toast.makeText(LoginActivity.this,t.getMessage(),Toast.LENGTH_LONG).show();
 
             }

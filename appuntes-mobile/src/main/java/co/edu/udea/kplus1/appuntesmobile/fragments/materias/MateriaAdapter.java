@@ -1,7 +1,10 @@
 package co.edu.udea.kplus1.appuntesmobile.fragments.materias;
 
+
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +30,7 @@ public class MateriaAdapter extends RecyclerView.Adapter<MateriaAdapter.ViewHold
     private static final String TAG = "MateriaAdapter";
     private static List<Materia> materias = new ArrayList<>();
     private static NavController navController;
+    private Boolean isLoading = true;
 
     public MateriaAdapter(List<Materia> materias) {
         MateriaAdapter.materias = materias;
@@ -36,6 +40,12 @@ public class MateriaAdapter extends RecyclerView.Adapter<MateriaAdapter.ViewHold
         MateriaAdapter.materias = materias;
         MateriaAdapter.navController = navController;
     }
+
+    public void setLoading(boolean isLoading) {
+        this.isLoading = isLoading;
+        notifyDataSetChanged();
+    }
+
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView textViewNombreMateria;
@@ -111,8 +121,14 @@ public class MateriaAdapter extends RecyclerView.Adapter<MateriaAdapter.ViewHold
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.materia_item, viewGroup, false);
-        return new ViewHolder(v);
+        if (isLoading){
+            View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.skeleton_card_layout, viewGroup, false);
+            return new ViewHolder(v);
+
+        }else {
+            View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.materia_item, viewGroup, false);
+            return new ViewHolder(v);
+        }
     }
 
     private static void showMyDialogFragment(Context context, Materia materia) {
@@ -123,15 +139,35 @@ public class MateriaAdapter extends RecyclerView.Adapter<MateriaAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-        viewHolder.getTextViewNombreMateria().setText(getItem(position).getMateriaUniversidad().getMateria());
-        viewHolder.getTextViewNombreProfesor().setText(getItem(position).getProfesor());
-        viewHolder.getTextViewCreditos().setText(String.valueOf(getItem(position).getCreditos()));
+        if (!isLoading) {
+            viewHolder.getTextViewNombreMateria().setText(getItem(position).getMateriaUniversidad().getMateria());
+            viewHolder.getTextViewNombreProfesor().setText(getItem(position).getProfesor());
+            viewHolder.getTextViewCreditos().setText(String.valueOf(getItem(position).getCreditos()));
+        }
     }
 
     @Override
     public int getItemCount() {
+        if (isLoading) {
+            return getSkeletonRowCount(navController.getContext());
+        }
         return materias.size();
     }
+
+    public int getSkeletonRowCount(Context context) {
+        int pxHeight = getDeviceHeight(context);
+        int skeletonRowHeight = (int) context.getResources()
+                .getDimension(R.dimen.skeleton_dimen);
+        return (int) Math.ceil(pxHeight / skeletonRowHeight);
+    }
+
+
+    public int getDeviceHeight(Context context){
+        Resources resources = context.getResources();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        return metrics.heightPixels;
+    }
+
 
     public static Materia getItem(int position) {
         return materias.get(position);
