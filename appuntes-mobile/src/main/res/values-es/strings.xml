@@ -25,4 +25,8 @@
     <string name="mensaje_guardar_apunte_exito">El apunte se guardo</string>
     <string name="mensaje_guardar_apunte_error">El apunte no se guardo</string>
     <string name="editar">Editar</string>
+    <string name="mensaje_crear_grupo_exito">El grupo ha sido creado</string>
+    <string name="mensaje_crear_grupo_error">El grupo no fue creado</string>
+    <string name="nombre_grupo_apunte">Nombre grupo apuntes</string>
+    <string name="escribir_apunte">Escribir…</string>
 </resources>

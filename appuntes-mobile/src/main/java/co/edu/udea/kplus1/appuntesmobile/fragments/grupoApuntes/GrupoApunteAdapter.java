@@ -20,6 +20,7 @@ import java.util.List;
 
 import co.edu.udea.kplus1.appuntesmobile.R;
 import co.edu.udea.kplus1.appuntesmobile.model.GrupoApunte;
+import co.edu.udea.kplus1.appuntesmobile.model.Materia;
 
 
 public class GrupoApunteAdapter extends RecyclerView.Adapter<GrupoApunteAdapter.ViewHolder> {
@@ -45,7 +46,7 @@ public class GrupoApunteAdapter extends RecyclerView.Adapter<GrupoApunteAdapter.
                     GrupoApunte grupoApunte = getItem(position);
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("GrupoApunte", grupoApunte);
-                    NavDirections action = co.edu.udea.kplus1.appuntesmobile.fragments.grupoApuntes.GrupoApunteFragmentDirections.actionGrupoApunteFragmentToFragmentApunte(grupoApunte);
+                    NavDirections action = co.edu.udea.kplus1.appuntesmobile.fragments.grupoApuntes.GrupoApunteFragmentDirections.actionGrupoApunteFragmentToFragmentApunte(false, grupoApunte, new Materia());
                     Navigation.findNavController(v).navigate(action);
                 }
 

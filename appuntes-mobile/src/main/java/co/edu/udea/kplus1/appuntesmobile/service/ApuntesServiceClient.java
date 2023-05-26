@@ -25,6 +25,9 @@ public interface ApuntesServiceClient {
     @POST(APUNTES_BASE + "/texto")
     Call<StandardResponse<Apunte>> guardarApunte(@Body Apunte apunte);
 
+    @POST(APUNTES_BASE + "/crear-grupos-apuntes")
+    Call<StandardResponse<GrupoApunte>> crearGruposApuntes(@Body GrupoApunte grupoApunte);
+
     @GET(APUNTES_BASE + "/filtro-apuntes")
     Call<StandardResponse<List<Apunte>>> buscarApuntesPorFiltro(@Query("apunte") String apunte,
                                                                 @Query("idGrupoApunte") Integer idGrupoApunte);
