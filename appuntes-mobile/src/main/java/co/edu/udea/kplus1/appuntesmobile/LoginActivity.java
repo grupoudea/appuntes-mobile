@@ -1,16 +1,13 @@
 package co.edu.udea.kplus1.appuntesmobile;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import co.edu.udea.kplus1.appuntesmobile.database.UsuarioDaoService;
-import co.edu.udea.kplus1.appuntesmobile.database.UsuarioDataBase;
+import androidx.appcompat.app.AppCompatActivity;
+
 import co.edu.udea.kplus1.appuntesmobile.database.UsuarioPersistence;
 import co.edu.udea.kplus1.appuntesmobile.model.Usuario;
 import co.edu.udea.kplus1.appuntesmobile.restclient.RestApiClient;
@@ -22,9 +19,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
-
-    private UsuarioDataBase usuarioDataBase;
-    private UsuarioDaoService usuarioDaoService;
 
     private UsuarioPersistence usuarioPersistence;
 

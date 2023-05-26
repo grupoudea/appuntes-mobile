@@ -27,7 +27,6 @@ import java.util.List;
 import java.util.Objects;
 
 import co.edu.udea.kplus1.appuntesmobile.R;
-import co.edu.udea.kplus1.appuntesmobile.database.UsuarioDaoService;
 import co.edu.udea.kplus1.appuntesmobile.database.UsuarioPersistence;
 import co.edu.udea.kplus1.appuntesmobile.databinding.MateriasFragmentBinding;
 import co.edu.udea.kplus1.appuntesmobile.model.Materia;
