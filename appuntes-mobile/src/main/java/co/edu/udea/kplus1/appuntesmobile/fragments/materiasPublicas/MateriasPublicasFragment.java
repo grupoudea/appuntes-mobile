@@ -38,14 +38,15 @@ import retrofit2.Response;
 public class MateriasPublicasFragment extends Fragment {
 
     private static final String TAG = "MateriasPublicasFragment";
+    private static final int SPAN_COUNT = 2;
+
+    private static final Integer ID_ESTUDIANTE_PUBLICO = 6;
     private MateriasPublicasFragmentBinding materiasPublicasFragmentBinding;
     private MateriasViewModel viewModel;
     protected RecyclerView mRecyclerView;
     protected MateriaAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
     protected LayoutManagerType mCurrentLayoutManagerType;
-    private static final int SPAN_COUNT = 2;
-
     private UsuarioManager usuarioManager;
 
     private UsuarioPersistence usuarioPersistence;
@@ -88,7 +89,7 @@ public class MateriasPublicasFragment extends Fragment {
 
         Call<StandardResponse<List<Materia>>> call = RestApiClient.getClient()
                 .create(MateriasServiceClient.class)
-                .filtrarMateriasPorEstudiante(busqueda, Math.toIntExact(usuarioPersistence.getIdEstudianteFk()));
+                .filtrarMateriasPorEstudiante(busqueda, ID_ESTUDIANTE_PUBLICO);
         call.enqueue(new Callback<StandardResponse<List<Materia>>>() {
             @Override
             public void onResponse(Call<StandardResponse<List<Materia>>> call, Response<StandardResponse<List<Materia>>> response) {
