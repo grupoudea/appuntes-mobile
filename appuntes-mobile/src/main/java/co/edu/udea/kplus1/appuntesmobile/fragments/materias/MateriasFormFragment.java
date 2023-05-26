@@ -26,8 +26,8 @@ import co.edu.udea.kplus1.appuntesmobile.model.Materia;
 import co.edu.udea.kplus1.appuntesmobile.model.MateriaUniversidad;
 import co.edu.udea.kplus1.appuntesmobile.restclient.RestApiClient;
 import co.edu.udea.kplus1.appuntesmobile.service.MateriasServiceClient;
-import co.edu.udea.kplus1.appuntesmobile.service.temp.Datos;
 import co.edu.udea.kplus1.appuntesmobile.utils.StandardResponse;
+import co.edu.udea.kplus1.appuntesmobile.utils.UsuarioManager;
 import co.edu.udea.kplus1.appuntesmobile.viewModel.MateriasViewModel;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,7 +36,6 @@ import retrofit2.Response;
 public class MateriasFormFragment extends Fragment {
 
     private static final String TAG = "MateriasFormFragment";
-
     private MateriasFormFragmentBinding binding;
     private MateriasViewModel viewModel;
     private List<MateriaUniversidad> materiasUniversidad = new ArrayList<>();
@@ -48,6 +47,8 @@ public class MateriasFormFragment extends Fragment {
     private EditText editTextCreditos;
     private EditText editTextProfesor;
 
+    private UsuarioManager usuarioManager;
+
     public MateriasFormFragment() {
 
     }
@@ -55,6 +56,7 @@ public class MateriasFormFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        usuarioManager = UsuarioManager.getInstance(requireContext());
         consultarMateriasUniversidad("");
     }
 
@@ -167,7 +169,7 @@ public class MateriasFormFragment extends Fragment {
             return false;
         }
         materia.setIdMateriaFk(materiaSeleccionada.getId());
-        materia.setIdEstudianteFk(Datos.getEstudianteSession());
+        materia.setIdEstudianteFk(Math.toIntExact(usuarioManager.obtenerUsuarioLogueado().getIdEstudianteFk()));
         materia.setCreditos(getCreditos());
         if (!validateRequired(materia.getCreditos())) {
             return false;

@@ -27,20 +27,23 @@ import java.util.List;
 import java.util.Objects;
 
 import co.edu.udea.kplus1.appuntesmobile.R;
+import co.edu.udea.kplus1.appuntesmobile.database.UsuarioDaoService;
+import co.edu.udea.kplus1.appuntesmobile.database.UsuarioPersistence;
 import co.edu.udea.kplus1.appuntesmobile.databinding.MateriasFragmentBinding;
 import co.edu.udea.kplus1.appuntesmobile.model.Materia;
 import co.edu.udea.kplus1.appuntesmobile.restclient.RestApiClient;
 import co.edu.udea.kplus1.appuntesmobile.service.MateriasServiceClient;
-import co.edu.udea.kplus1.appuntesmobile.service.temp.Datos;
 import co.edu.udea.kplus1.appuntesmobile.utils.LayoutManagerType;
 import co.edu.udea.kplus1.appuntesmobile.utils.StandardResponse;
+import co.edu.udea.kplus1.appuntesmobile.utils.UsuarioManager;
 import co.edu.udea.kplus1.appuntesmobile.viewModel.MateriasViewModel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MateriasFragment extends Fragment {
-
+    private UsuarioManager usuarioManager;
+    private UsuarioPersistence usuarioPersistence;
     private static final String TAG = "MateriasFragment";
     private MateriasFragmentBinding binding;
     private MateriasViewModel viewModel;
@@ -54,6 +57,10 @@ public class MateriasFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        usuarioManager = UsuarioManager.getInstance(requireContext());
+        usuarioPersistence = usuarioManager.obtenerUsuarioLogueado();
+        Log.i(TAG,usuarioPersistence.toString());
+
         consultarMaterias("");
     }
 
@@ -125,7 +132,8 @@ public class MateriasFragment extends Fragment {
 
     private void consultarMaterias(String busqueda) {
         Call<StandardResponse<List<Materia>>> call = RestApiClient.getClient()
-                .create(MateriasServiceClient.class).filtrarMateriasPorEstudiante(busqueda, Datos.getEstudianteSession());
+                .create(MateriasServiceClient.class)
+                .filtrarMateriasPorEstudiante(busqueda, Math.toIntExact(usuarioPersistence.getIdEstudianteFk()));
 
         call.enqueue(new Callback<StandardResponse<List<Materia>>>() {
             @Override
