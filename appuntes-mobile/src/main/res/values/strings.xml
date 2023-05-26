@@ -23,4 +23,5 @@
     <string name="editar">Edit</string>
     <string name="contrase_a">Contraseña</string>
     <string name="iniciar_sesi_n">Iniciar sesión</string>
+    <string name="cerrar_sesi_n">Cerrar sesión</string>
 </resources>
