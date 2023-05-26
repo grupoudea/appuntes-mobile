@@ -1,7 +1,6 @@
 package co.edu.udea.kplus1.appuntesmobile.database;
 
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
+
 
 public class UsuarioPersistence {
 
