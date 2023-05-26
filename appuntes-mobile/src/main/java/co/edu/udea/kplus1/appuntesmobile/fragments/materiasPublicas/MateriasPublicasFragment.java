@@ -21,14 +21,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import co.edu.udea.kplus1.appuntesmobile.R;
+import co.edu.udea.kplus1.appuntesmobile.database.UsuarioPersistence;
 import co.edu.udea.kplus1.appuntesmobile.databinding.MateriasPublicasFragmentBinding;
 import co.edu.udea.kplus1.appuntesmobile.fragments.materias.MateriaAdapter;
 import co.edu.udea.kplus1.appuntesmobile.model.Materia;
 import co.edu.udea.kplus1.appuntesmobile.restclient.RestApiClient;
 import co.edu.udea.kplus1.appuntesmobile.service.MateriasServiceClient;
-import co.edu.udea.kplus1.appuntesmobile.service.temp.Datos;
 import co.edu.udea.kplus1.appuntesmobile.utils.LayoutManagerType;
 import co.edu.udea.kplus1.appuntesmobile.utils.StandardResponse;
+import co.edu.udea.kplus1.appuntesmobile.utils.UsuarioManager;
 import co.edu.udea.kplus1.appuntesmobile.viewModel.MateriasViewModel;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -45,11 +46,17 @@ public class MateriasPublicasFragment extends Fragment {
     protected LayoutManagerType mCurrentLayoutManagerType;
     private static final int SPAN_COUNT = 2;
 
+    private UsuarioManager usuarioManager;
+
+    private UsuarioPersistence usuarioPersistence;
+
     private List<Materia> materias = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        usuarioManager = UsuarioManager.getInstance(requireContext());
+        usuarioPersistence = usuarioManager.obtenerUsuarioLogueado();
         consultarMaterias("");
     }
 
@@ -80,7 +87,8 @@ public class MateriasPublicasFragment extends Fragment {
     private void consultarMaterias(String busqueda) {
 
         Call<StandardResponse<List<Materia>>> call = RestApiClient.getClient()
-                .create(MateriasServiceClient.class).filtrarMateriasPorEstudiante(busqueda, 6);
+                .create(MateriasServiceClient.class)
+                .filtrarMateriasPorEstudiante(busqueda, Math.toIntExact(usuarioPersistence.getIdEstudianteFk()));
         call.enqueue(new Callback<StandardResponse<List<Materia>>>() {
             @Override
             public void onResponse(Call<StandardResponse<List<Materia>>> call, Response<StandardResponse<List<Materia>>> response) {
