@@ -89,4 +89,18 @@ public class Materia implements Serializable {
     public void setMenuOpen(boolean menuOpen) {
         isMenuOpen = menuOpen;
     }
+
+    @Override
+    public String toString() {
+        return "Materia{" +
+                "id=" + id +
+                ", idMateriaFk=" + idMateriaFk +
+                ", materiaUniversidad=" + materiaUniversidad +
+                ", idEstudianteFk=" + idEstudianteFk +
+                ", estudiante=" + estudiante +
+                ", creditos=" + creditos +
+                ", profesor='" + profesor + '\'' +
+                ", isMenuOpen=" + isMenuOpen +
+                '}';
+    }
 }
