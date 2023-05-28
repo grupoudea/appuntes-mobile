@@ -76,5 +76,4 @@
         android:name="co.edu.udea.kplus1.appuntesmobile.fragments.apuntes.ApunteFragment"
         android:label="Apuntes"
         tools:layout="@layout/fragment_apunte" />
-    </fragment>
 </navigation>

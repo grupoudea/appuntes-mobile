@@ -213,6 +213,7 @@ public class ApunteFragment extends Fragment {
                     List<Apunte> apunteList = response.body().getBody();
                     apuntes.clear();
                     apuntes.addAll(apunteList);
+                    mApunteAdapter.notifyDataSetChanged();
                 }
                 mApunteAdapter = new ApunteAdapter(apuntes);
                 if (mRecyclerView != null) {
