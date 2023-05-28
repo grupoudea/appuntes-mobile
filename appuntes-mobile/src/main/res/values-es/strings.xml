@@ -12,6 +12,7 @@
     <string name="profesor">Profesor</string>
     <string name="buscar_materia_autocomplete">Buscar materia…</string>
     <string name="mensaje_campo_requerido">Falta un campo requerido</string>
+    <string name="titulo_apuntes">Apuntes</string>
     <string name="mensaje_crear_materia_exito">La materia ha sido creada</string>
     <string name="mensaje_crear_materia_error">La materia no fue creada</string>
     <string name="mensaje_editar_materia_exito">La materia ha sido actualizada</string>
@@ -21,7 +22,15 @@
     <string name="dialog_confim_delete_grupo_apunte">¿Está seguro de eliminar este grupo de apuntes? Si lo elimina se eliminarán todos los apuntes asociados</string>
     <string name="delete">Eliminar</string>
     <string name="cancel">Cancelar</string>
+    <string name="mensaje_guardar_apunte_exito">El apunte se guardo</string>
+    <string name="mensaje_guardar_apunte_error">El apunte no se guardo</string>
     <string name="editar">Editar</string>
+    <string name="mensaje_crear_grupo_exito">El grupo ha sido creado</string>
+    <string name="mensaje_crear_grupo_error">El grupo no fue creado</string>
+    <string name="nombre_grupo_apunte">Nombre grupo apuntes</string>
+    <string name="escribir_apunte">Escribir…</string>
+    <string name="share">Compartir</string>
+    <string name="publish">Publicar</string>
     <string name="contrase_a">Contraseña</string>
     <string name="iniciar_sesi_n">Iniciar sesión</string>
     <string name="cerrar_sesi_n">Cerrar sesión</string>

@@ -56,5 +56,24 @@
         android:id="@+id/grupoApunteFragment"
         android:name="co.edu.udea.kplus1.appuntesmobile.fragments.grupoApuntes.GrupoApunteFragment"
         android:label="Apuntes"
-        tools:layout="@layout/fragment_grupo_apunte"></fragment>
+        tools:layout="@layout/fragment_grupo_apunte">
+        <action
+            android:id="@+id/action_grupoApunteFragment_to_fragmentApunte"
+            app:destination="@id/fragmentApunte">
+            <argument
+                android:name="esNuevoGrupo"
+                app:argType="boolean" />
+            <argument
+                android:name="GrupoApunte"
+                app:argType="co.edu.udea.kplus1.appuntesmobile.model.GrupoApunte" />
+            <argument
+                android:name="Materia"
+                app:argType="co.edu.udea.kplus1.appuntesmobile.model.Materia" />
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentApunte"
+        android:name="co.edu.udea.kplus1.appuntesmobile.fragments.apuntes.ApunteFragment"
+        android:label="Apuntes"
+        tools:layout="@layout/fragment_apunte" />
 </navigation>

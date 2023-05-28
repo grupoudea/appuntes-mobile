@@ -21,6 +21,15 @@
     <string name="delete">Delete</string>
     <string name="cancel">Cancel</string>
     <string name="editar">Edit</string>
+    <string name="mensaje_guardar_apunte_exito">the note was saved</string>
+    <string name="mensaje_guardar_apunte_error">the note wasn\'t saved</string>
+    <string name="titulo_apuntes">Notes</string>
+    <string name="mensaje_crear_grupo_exito">The group has been created</string>
+    <string name="mensaje_crear_grupo_error">The group has not been created</string>
+    <string name="nombre_grupo_apunte">Group name notes</string>
+    <string name="escribir_apunte">Type in…</string>
+    <string name="share">share</string>
+    <string name="publish">publish</string>
     <string name="contrase_a">Password</string>
     <string name="iniciar_sesi_n">Sing in</string>
     <string name="cerrar_sesi_n">Log out</string>
