@@ -31,6 +31,7 @@
     <string name="share">share</string>
     <string name="publish">publish</string>
     <string name="contrase_a">Password</string>
-    <string name="iniciar_sesi_n">Sign in</string>
-    <string name="cerrar_sesi_n">Sign out</string>
+    <string name="iniciar_sesi_n">Sing in</string>
+    <string name="cerrar_sesi_n">Log out</string>
+    <string name="usuario">User</string>
 </resources>
