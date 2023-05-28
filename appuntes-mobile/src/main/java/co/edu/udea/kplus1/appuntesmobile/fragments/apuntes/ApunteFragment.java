@@ -36,6 +36,7 @@ import co.edu.udea.kplus1.appuntesmobile.service.ApuntesServiceClient;
 import co.edu.udea.kplus1.appuntesmobile.utils.LayoutManagerType;
 import co.edu.udea.kplus1.appuntesmobile.utils.StandardResponse;
 import co.edu.udea.kplus1.appuntesmobile.viewModel.ApunteViewModel;
+import co.edu.udea.kplus1.appuntesmobile.viewModel.GrupoApunteViewModel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -45,6 +46,7 @@ public class ApunteFragment extends Fragment {
     private static final String TAG = "ApuntesFragment";
     private FragmentApunteBinding binding;
     private ApunteViewModel viewModel;
+    private GrupoApunteViewModel grupoApunteViewModel;
     private RecyclerView mRecyclerView;
     private EditText mEditText;
     private EditText editTextNombreApunte;
@@ -83,6 +85,11 @@ public class ApunteFragment extends Fragment {
 
         viewModel = new ViewModelProvider(requireActivity()).get(ApunteViewModel.class);
         viewModel.get().observe(getViewLifecycleOwner(), newData -> consultarApuntes(""));
+
+        grupoApunteViewModel = new ViewModelProvider(requireActivity()).get(GrupoApunteViewModel.class);
+        grupoApunteViewModel.get().observe(getViewLifecycleOwner(), newData -> {
+            grupoApunte = newData;
+        });
 
         mRecyclerView = view.findViewById(R.id.cyclerViewApuntes);
         mEditText = binding.getRoot().findViewById(R.id.editText);
@@ -149,7 +156,9 @@ public class ApunteFragment extends Fragment {
                 materia = (Materia) getArguments().getSerializable("Materia");
                 mostrarTitulo(false);
             } else {
-                grupoApunte = (GrupoApunte) getArguments().getSerializable("GrupoApunte");
+                GrupoApunte grupoApunteSelected = (GrupoApunte) getArguments().getSerializable("GrupoApunte");
+                grupoApunteViewModel.set(grupoApunteSelected);
+                grupoApunte = grupoApunteSelected;
                 mostrarTitulo(true);
                 consultarApuntes("");
             }
@@ -284,6 +293,7 @@ public class ApunteFragment extends Fragment {
             public void onResponse(Call<StandardResponse<GrupoApunte>> call, Response<StandardResponse<GrupoApunte>> response) {
                 if (Objects.nonNull(response) && Objects.nonNull(response.body()) && Objects.nonNull(response.body().getBody())) {
                     GrupoApunte grupoApunte = response.body().getBody();
+                    grupoApunteViewModel.set(grupoApunte);
                     mostrarTitulo(true);
                     Toast.makeText(getActivity(), R.string.mensaje_crear_grupo_exito, Toast.LENGTH_LONG).show();
                 } else {
