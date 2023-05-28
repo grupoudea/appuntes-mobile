@@ -68,7 +68,7 @@ public class MateriasPublicasFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(MateriasViewModel.class);
         materiasPublicasFragmentBinding.setLifecycleOwner(getViewLifecycleOwner());
         buildReciclerView(savedInstanceState);
-
+        consultarMaterias("");
         return materiasPublicasFragmentBinding.getRoot();
     }
 
@@ -95,10 +95,11 @@ public class MateriasPublicasFragment extends Fragment {
             public void onResponse(Call<StandardResponse<List<Materia>>> call, Response<StandardResponse<List<Materia>>> response) {
                 List<Materia> materiasList = response.body().getBody();
 
-                for (Materia materia : materiasList) {
-                    materias.add(materia);
-                }
+                materias.clear();
+                materias.addAll(materiasList);
+                
                 mAdapter = new MateriaAdapter(materias);
+                mAdapter.setLoading(false);
                 mRecyclerView.setAdapter(mAdapter);
             }
 
@@ -106,6 +107,7 @@ public class MateriasPublicasFragment extends Fragment {
             public void onFailure(Call<StandardResponse<List<Materia>>> call, Throwable t) {
                 Log.i(TAG, "Error:" + t.getLocalizedMessage());
                 Log.i(TAG, "Error:" + t.fillInStackTrace());
+                mAdapter.setLoading(false);
                 Toast.makeText(getActivity(), "ERROR" + t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });

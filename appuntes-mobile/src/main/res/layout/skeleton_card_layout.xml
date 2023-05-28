@@ -7,7 +7,6 @@
     app:cardCornerRadius="4dp"
     app:cardUseCompatPadding="true"
     app:cardElevation="3dp"
-    android:layout_marginBottom="6dp"
     app:cardPreventCornerOverlap="true">
 
     <RelativeLayout
@@ -20,7 +19,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingTop="8dp"
-            android:paddingBottom="16dp"
+            android:paddingBottom="8dp"
             android:paddingHorizontal="16dp">
 
             <LinearLayout
