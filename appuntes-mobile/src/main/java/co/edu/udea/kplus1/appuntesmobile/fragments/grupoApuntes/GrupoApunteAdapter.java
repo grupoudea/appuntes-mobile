@@ -111,5 +111,4 @@ public class GrupoApunteAdapter extends RecyclerView.Adapter<GrupoApunteAdapter.
         ConfirmationDeleteGrupoApunteFragment dialog = ConfirmationDeleteGrupoApunteFragment.confirmationDeleteGrupoApunteFragment(grupoApunte);
         dialog.show(fragmentManager, "my_dialog");
     }
-
 }

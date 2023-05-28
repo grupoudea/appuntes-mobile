@@ -22,12 +22,9 @@ import retrofit2.Response;
 public class LoginActivity extends AppCompatActivity {
 
     private UsuarioPersistence usuarioPersistence;
-
     private UsuarioManager usuarioManager;
-
-    private  EditText usuario;
+    private EditText usuario;
     private EditText contrasena;
-
     private ProgressDialog progressDialog;
 
 
@@ -58,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
             progressDialog.setMessage(message);
             progressDialog.setIndeterminate(true);
             progressDialog.setCancelable(false);
-        }else{
+        } else {
             progressDialog.setMessage(message);
             progressDialog.show();
         }
@@ -70,23 +67,22 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-
     public void iniciarSesionOnClick(View view) {
         final String usuarioIngresado = usuario.getText().toString().trim();
         final String contrasenaIngresada = contrasena.getText().toString().trim();
 
-        if(camposVacios(usuarioIngresado, contrasenaIngresada)) {
+        if (camposVacios(usuarioIngresado, contrasenaIngresada)) {
             showProgressDialog("Iniciando sesión...");
             iniciarSesion(usuarioIngresado, contrasenaIngresada);
         }
     }
 
-    public void iniciarSesion(final String usuarioIngresado, final String contrasenaIngresada){
+    public void iniciarSesion(final String usuarioIngresado, final String contrasenaIngresada) {
         Usuario usuario = new Usuario();
         usuario.setNombreUsuario(usuarioIngresado);
         usuario.setPassword(contrasenaIngresada);
         Call<StandardResponse<Usuario>> usuarioAutenticado = RestApiClient.getClient()
-                        .create(UsuariosServiceClient.class).iniciarSesion(usuario);
+                .create(UsuariosServiceClient.class).iniciarSesion(usuario);
 
         usuarioAutenticado.enqueue(new Callback<StandardResponse<Usuario>>() {
             @Override
@@ -98,15 +94,13 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<StandardResponse<Usuario>> call, Throwable t) {
                 hideProgressDialog();
-
-                Toast.makeText(LoginActivity.this,t.getMessage(),Toast.LENGTH_LONG).show();
-
+                Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
 
-    public  void validarOnResponse(Call<StandardResponse<Usuario>> call,
-                                   Response<StandardResponse<Usuario>> response){
+    public void validarOnResponse(Call<StandardResponse<Usuario>> call,
+                                  Response<StandardResponse<Usuario>> response) {
 
         if (String.valueOf(response.code()).equals("200")) {
             Usuario usuarioLogueado = response.body().getBody();
@@ -122,24 +116,22 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             LoginActivity.this.startActivity(intent);
 
-        }else if(String.valueOf(response.code()).equals("404")){
-            Toast.makeText(LoginActivity.this,"Usuario no existe",Toast.LENGTH_LONG).show();
-        }
-        else{
-            Toast.makeText(LoginActivity.this,"Usuario o contraseña incorrecto",Toast.LENGTH_LONG).show();
+        } else if (String.valueOf(response.code()).equals("404")) {
+            Toast.makeText(LoginActivity.this, "Usuario no existe", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(LoginActivity.this, "Usuario o contraseña incorrecto", Toast.LENGTH_LONG).show();
         }
     }
 
-    private boolean camposVacios(String usuario, String contrasena){
-        if (usuario.isEmpty()){
-            Toast.makeText(this, "Usuario es requerido",Toast.LENGTH_LONG).show();
+    private boolean camposVacios(String usuario, String contrasena) {
+        if (usuario.isEmpty()) {
+            Toast.makeText(this, "Usuario es requerido", Toast.LENGTH_LONG).show();
             return false;
         }
-        if (contrasena.isEmpty()){
-            Toast.makeText(this, "Contraseña es requerida",Toast.LENGTH_LONG).show();
+        if (contrasena.isEmpty()) {
+            Toast.makeText(this, "Contraseña es requerida", Toast.LENGTH_LONG).show();
             return false;
         }
         return true;
-
     }
 }

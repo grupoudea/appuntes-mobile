@@ -51,7 +51,6 @@ public class MateriasFragment extends Fragment {
     protected MateriaAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
     protected LayoutManagerType mCurrentLayoutManagerType;
-
     private static final int SPAN_COUNT = 2;
 
     @Override
@@ -59,9 +58,8 @@ public class MateriasFragment extends Fragment {
         super.onCreate(savedInstanceState);
         usuarioManager = UsuarioManager.getInstance(requireContext());
         usuarioPersistence = usuarioManager.obtenerUsuarioLogueado();
-        Log.i(TAG,usuarioPersistence.toString());
+        Log.i(TAG, usuarioPersistence.toString());
         consultarMaterias("");
-
     }
 
     @Override

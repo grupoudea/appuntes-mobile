@@ -2,9 +2,7 @@ package co.edu.udea.kplus1.appuntesmobile.fragments.materias;
 
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +22,7 @@ import java.util.List;
 
 import co.edu.udea.kplus1.appuntesmobile.R;
 import co.edu.udea.kplus1.appuntesmobile.model.Materia;
+import co.edu.udea.kplus1.appuntesmobile.utils.Constants;
 
 public class MateriaAdapter extends RecyclerView.Adapter<MateriaAdapter.ViewHolder> {
 
@@ -121,14 +120,14 @@ public class MateriaAdapter extends RecyclerView.Adapter<MateriaAdapter.ViewHold
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        if (isLoading){
-            View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.skeleton_card_layout, viewGroup, false);
-            return new ViewHolder(v);
+        View v;
+        if (isLoading) {
+            v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.skeleton_card_layout, viewGroup, false);
 
-        }else {
-            View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.materia_item, viewGroup, false);
-            return new ViewHolder(v);
+        } else {
+            v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.materia_item, viewGroup, false);
         }
+        return new ViewHolder(v);
     }
 
     private static void showMyDialogFragment(Context context, Materia materia) {
@@ -149,28 +148,12 @@ public class MateriaAdapter extends RecyclerView.Adapter<MateriaAdapter.ViewHold
     @Override
     public int getItemCount() {
         if (isLoading) {
-            return getSkeletonRowCount(navController.getContext());
+            return Constants.ITEMS_SKELETOR;
         }
         return materias.size();
     }
 
-    public int getSkeletonRowCount(Context context) {
-        int pxHeight = getDeviceHeight(context);
-        int skeletonRowHeight = (int) context.getResources()
-                .getDimension(R.dimen.skeleton_dimen);
-        return (int) Math.ceil(pxHeight / skeletonRowHeight);
-    }
-
-
-    public int getDeviceHeight(Context context){
-        Resources resources = context.getResources();
-        DisplayMetrics metrics = resources.getDisplayMetrics();
-        return metrics.heightPixels;
-    }
-
-
     public static Materia getItem(int position) {
         return materias.get(position);
     }
-
 }

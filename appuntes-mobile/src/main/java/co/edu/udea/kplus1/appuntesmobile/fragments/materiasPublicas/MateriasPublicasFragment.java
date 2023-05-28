@@ -27,6 +27,7 @@ import co.edu.udea.kplus1.appuntesmobile.fragments.materias.MateriaAdapter;
 import co.edu.udea.kplus1.appuntesmobile.model.Materia;
 import co.edu.udea.kplus1.appuntesmobile.restclient.RestApiClient;
 import co.edu.udea.kplus1.appuntesmobile.service.MateriasServiceClient;
+import co.edu.udea.kplus1.appuntesmobile.utils.Constants;
 import co.edu.udea.kplus1.appuntesmobile.utils.LayoutManagerType;
 import co.edu.udea.kplus1.appuntesmobile.utils.StandardResponse;
 import co.edu.udea.kplus1.appuntesmobile.utils.UsuarioManager;
@@ -39,8 +40,6 @@ public class MateriasPublicasFragment extends Fragment {
 
     private static final String TAG = "MateriasPublicasFragment";
     private static final int SPAN_COUNT = 2;
-
-    private static final Integer ID_ESTUDIANTE_PUBLICO = 6;
     private MateriasPublicasFragmentBinding materiasPublicasFragmentBinding;
     private MateriasViewModel viewModel;
     protected RecyclerView mRecyclerView;
@@ -48,9 +47,7 @@ public class MateriasPublicasFragment extends Fragment {
     protected RecyclerView.LayoutManager mLayoutManager;
     protected LayoutManagerType mCurrentLayoutManagerType;
     private UsuarioManager usuarioManager;
-
     private UsuarioPersistence usuarioPersistence;
-
     private List<Materia> materias = new ArrayList<>();
 
     @Override
@@ -89,7 +86,7 @@ public class MateriasPublicasFragment extends Fragment {
 
         Call<StandardResponse<List<Materia>>> call = RestApiClient.getClient()
                 .create(MateriasServiceClient.class)
-                .filtrarMateriasPorEstudiante(busqueda, ID_ESTUDIANTE_PUBLICO);
+                .filtrarMateriasPorEstudiante(busqueda, Constants.ID_ESTUDIANTE_PUBLICO);
         call.enqueue(new Callback<StandardResponse<List<Materia>>>() {
             @Override
             public void onResponse(Call<StandardResponse<List<Materia>>> call, Response<StandardResponse<List<Materia>>> response) {
@@ -97,7 +94,7 @@ public class MateriasPublicasFragment extends Fragment {
 
                 materias.clear();
                 materias.addAll(materiasList);
-                
+
                 mAdapter = new MateriaAdapter(materias);
                 mAdapter.setLoading(false);
                 mRecyclerView.setAdapter(mAdapter);
@@ -132,5 +129,4 @@ public class MateriasPublicasFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.scrollToPosition(scrollPosition);
     }
-
 }
