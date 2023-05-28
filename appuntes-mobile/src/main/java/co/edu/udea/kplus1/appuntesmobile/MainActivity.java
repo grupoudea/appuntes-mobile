@@ -1,6 +1,9 @@
 package co.edu.udea.kplus1.appuntesmobile;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -12,9 +15,14 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.navigation.NavigationView;
 
 import co.edu.udea.kplus1.appuntesmobile.databinding.ActivityMainBinding;
+import co.edu.udea.kplus1.appuntesmobile.utils.UsuarioManager;
 
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String TAG = MainActivity.class.toString();
+
+    private UsuarioManager usuarioManager;
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
@@ -23,9 +31,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
+        usuarioManager = UsuarioManager.getInstance(getApplicationContext());
         setContentView(binding.getRoot());
         setSupportActionBar(binding.appBarMain.toolbar);
         setupAppBar();
+    }
+
+    public void onClickCerrarSesion(MenuItem menuItem) {
+        Log.i(TAG, "El usuario está cerrando sesión");
+        usuarioManager.clearUserCredentials();
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        MainActivity.this.startActivity(intent);
+        finishAffinity();
+
+
     }
 
     private void setupAppBar() {
