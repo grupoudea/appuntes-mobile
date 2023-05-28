@@ -14,7 +14,6 @@ public class UsuarioManager {
     private static final String PREF_ID_ESTUDIANTE = "idEstudianteFk";
     private static final String PREF_NOMBRE_ESTUDIANTE = "nombreEstudiante";
 
-
     private UsuarioManager(Context context) {
         sharedPreferences = context.getApplicationContext()
                 .getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);
@@ -54,10 +53,7 @@ public class UsuarioManager {
         usuarioPersistence.setNombreEstudiante(sharedPreferences.getString(PREF_NOMBRE_ESTUDIANTE, ""));
         usuarioPersistence.setNombreUsuario(sharedPreferences.getString(PREF_NOMBRE_USUARIO, ""));
         usuarioPersistence.setPassword(sharedPreferences.getString(PREF_CONTRASENA, ""));
-
-
-        return  usuarioPersistence;
-
+        return usuarioPersistence;
     }
 
     public String getUsername() {

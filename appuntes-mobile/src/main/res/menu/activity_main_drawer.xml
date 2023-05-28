@@ -9,7 +9,7 @@
             android:title="@string/item1" />
         <item
             android:id="@+id/logout"
-            android:title="@string/cerrar_sesi_n"
-            android:onClick="onClickCerrarSesion"/>
+            android:onClick="onClickCerrarSesion"
+            android:title="@string/cerrar_sesi_n" />
     </group>
 </menu>

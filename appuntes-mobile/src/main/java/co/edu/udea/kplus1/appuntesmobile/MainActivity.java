@@ -21,9 +21,7 @@ import co.edu.udea.kplus1.appuntesmobile.utils.UsuarioManager;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.toString();
-
     private UsuarioManager usuarioManager;
-
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
 
@@ -43,8 +41,6 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         MainActivity.this.startActivity(intent);
         finishAffinity();
-
-
     }
 
     private void setupAppBar() {

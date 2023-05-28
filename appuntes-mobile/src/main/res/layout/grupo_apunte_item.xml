@@ -1,52 +1,61 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_vertical"
-    android:orientation="horizontal"
-    android:padding="16dp">
+    android:layout_marginBottom="8dp"
+    app:cardCornerRadius="4dp"
+    app:cardElevation="3dp"
+    app:cardPreventCornerOverlap="true"
+    app:cardUseCompatPadding="true">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:background="@drawable/card_shadow">
 
         <LinearLayout
-            android:id="@+id/linearLayoutGrupoApunte"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginStart="16dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp">
 
-            <TextView
-                android:id="@+id/textViewNombreGrupoApunte"
+            <LinearLayout
+                android:id="@+id/linearLayoutGrupoApunte"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:layout_height="60dp"
+                android:layout_marginStart="16dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textViewFechaGrupoApunte"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="14sp" />
+                <TextView
+                    android:id="@+id/textViewNombreGrupoApunte"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
+                <TextView
+                    android:id="@+id/textViewFechaGrupoApunte"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/buttonMenuGrupoApunte"
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|end"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:paddingStart="0dp"
+                android:paddingEnd="0dp"
+                android:paddingBottom="10dp"
+                android:textColor="?attr/colorOnSecondary"
+                android:textSize="28sp" />
         </LinearLayout>
+    </RelativeLayout>
 
-        <Button
-            android:id="@+id/buttonMenuGrupoApunte"
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:layout_weight="1"
-            android:background="@drawable/baseline_more_vert_24"
-            android:paddingStart="0dp"
-            android:paddingEnd="0dp"
-            android:textColor="#000000"
-            app:icon="@color/black" />
-    </LinearLayout>
-
-</FrameLayout>
+</androidx.cardview.widget.CardView>

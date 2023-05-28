@@ -56,8 +56,5 @@
         android:id="@+id/grupoApunteFragment"
         android:name="co.edu.udea.kplus1.appuntesmobile.fragments.grupoApuntes.GrupoApunteFragment"
         android:label="Apuntes"
-        tools:layout="@layout/fragment_grupo_apunte">
-    </fragment>
-
-
+        tools:layout="@layout/fragment_grupo_apunte"></fragment>
 </navigation>

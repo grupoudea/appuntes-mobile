@@ -58,8 +58,7 @@ public class MateriasFragment extends Fragment {
         super.onCreate(savedInstanceState);
         usuarioManager = UsuarioManager.getInstance(requireContext());
         usuarioPersistence = usuarioManager.obtenerUsuarioLogueado();
-        Log.i(TAG,usuarioPersistence.toString());
-
+        Log.i(TAG, usuarioPersistence.toString());
         consultarMaterias("");
     }
 
@@ -139,10 +138,13 @@ public class MateriasFragment extends Fragment {
             public void onResponse(Call<StandardResponse<List<Materia>>> call, Response<StandardResponse<List<Materia>>> response) {
                 if (Objects.nonNull(response) && Objects.nonNull(response.body()) && Objects.nonNull(response.body().getBody())) {
                     List<Materia> materiasList = response.body().getBody();
+
                     materias.clear();
                     materias.addAll(materiasList);
+
                 }
                 mAdapter = new MateriaAdapter(materias);
+                mAdapter.setLoading(false);
                 if (mRecyclerView != null) {
                     mRecyclerView.setAdapter(mAdapter);
                 }
@@ -153,6 +155,7 @@ public class MateriasFragment extends Fragment {
                 Log.i(TAG, "Error:" + t.getLocalizedMessage());
                 Log.i(TAG, "Error:" + t.fillInStackTrace());
                 Toast.makeText(getActivity(), "ERROR" + t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                mAdapter.setLoading(false);
             }
         });
     }

@@ -1,7 +1,6 @@
 package co.edu.udea.kplus1.appuntesmobile.database;
 
 
-
 public class UsuarioPersistence {
 
     private Long id;

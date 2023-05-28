@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Objects;
 
 import co.edu.udea.kplus1.appuntesmobile.R;
+import co.edu.udea.kplus1.appuntesmobile.database.UsuarioPersistence;
 import co.edu.udea.kplus1.appuntesmobile.databinding.MateriasFormFragmentBinding;
 import co.edu.udea.kplus1.appuntesmobile.model.Materia;
 import co.edu.udea.kplus1.appuntesmobile.model.MateriaUniversidad;
@@ -48,6 +49,7 @@ public class MateriasFormFragment extends Fragment {
     private EditText editTextProfesor;
 
     private UsuarioManager usuarioManager;
+    private UsuarioPersistence usuarioPersistence;
 
     public MateriasFormFragment() {
 
@@ -57,6 +59,7 @@ public class MateriasFormFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         usuarioManager = UsuarioManager.getInstance(requireContext());
+        usuarioPersistence = usuarioManager.obtenerUsuarioLogueado();
         consultarMateriasUniversidad("");
     }
 
@@ -139,7 +142,7 @@ public class MateriasFormFragment extends Fragment {
             public void onFailure(Call<StandardResponse<List<MateriaUniversidad>>> call, Throwable t) {
                 Log.i(TAG, "Error:" + t.getLocalizedMessage());
                 Log.i(TAG, "Error:" + t.fillInStackTrace());
-                Toast.makeText(getActivity(), "ERROR" + t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "ERROR " + t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
