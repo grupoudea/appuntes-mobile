@@ -90,9 +90,6 @@ public class GrupoApunteFragment extends Fragment {
             consultarGruposApuntes("");
         }
 
-        binding.buttonCrearGrupoApunte.setOnClickListener(v -> NavHostFragment.findNavController(GrupoApunteFragment.this)
-                .navigate(R.id.action_grupoApunteFragment_to_fragmentApunte));
-
         binding.buttonCrearGrupoApunte.setOnClickListener(v -> {
             NavController navController = NavHostFragment.findNavController(GrupoApunteFragment.this);
 

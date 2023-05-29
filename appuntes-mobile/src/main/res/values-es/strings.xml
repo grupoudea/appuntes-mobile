@@ -31,4 +31,7 @@
     <string name="escribir_apunte">Escribir…</string>
     <string name="share">Compartir</string>
     <string name="publish">Publicar</string>
+    <string name="contrase_a">Contraseña</string>
+    <string name="iniciar_sesi_n">Iniciar sesión</string>
+    <string name="cerrar_sesi_n">Cerrar sesión</string>
 </resources>
