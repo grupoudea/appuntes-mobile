@@ -16,8 +16,6 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -50,12 +48,8 @@ public class ApunteFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private EditText mEditText;
     private EditText editTextNombreApunte;
-    private ImageButton mCameraButton;
-    private ImageButton mMicButton;
-    private ImageButton mSendButton;
     private ImageButton saveGrupo;
     private TextView textViewTituloGrupoapunte;
-    private List<Apunte> mApuntesList = new ArrayList<>();
     private ApunteAdapter mApunteAdapter;
     private GrupoApunte grupoApunte = new GrupoApunte();
     private List<Apunte> apuntes = new ArrayList<>();
@@ -76,14 +70,11 @@ public class ApunteFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_apunte, container, false);
-
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_apunte, container, false);
 
+        viewModel = new ViewModelProvider(requireActivity()).get(ApunteViewModel.class);
         binding.setLifecycleOwner(getViewLifecycleOwner());
         buildReciclerView(savedInstanceState);
-
-        viewModel = new ViewModelProvider(requireActivity()).get(ApunteViewModel.class);
         viewModel.get().observe(getViewLifecycleOwner(), newData -> consultarApuntes(""));
 
         grupoApunteViewModel = new ViewModelProvider(requireActivity()).get(GrupoApunteViewModel.class);
@@ -91,39 +82,28 @@ public class ApunteFragment extends Fragment {
             grupoApunte = newData;
         });
 
-        mRecyclerView = view.findViewById(R.id.cyclerViewApuntes);
         mEditText = binding.getRoot().findViewById(R.id.editText);
-        mCameraButton = view.findViewById(R.id.cameraButton);
-        mMicButton = view.findViewById(R.id.micButton);
-        mSendButton = view.findViewById(R.id.sendButton);
 
         editTextNombreApunte = binding.getRoot().findViewById(R.id.editTextNombreApunte);
         saveGrupo = binding.getRoot().findViewById(R.id.buttonSaveGrupo);
         textViewTituloGrupoapunte = binding.getRoot().findViewById(R.id.textViewTituloGrupoapunte);
 
-        // Initialize RecyclerView and Adapter
-        mApunteAdapter = new ApunteAdapter(mApuntesList);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        mRecyclerView.setLayoutManager(layoutManager);
-        mRecyclerView.setAdapter(mApunteAdapter);
-
-
         // Set click listeners for buttons
-        mCameraButton.setOnClickListener(new View.OnClickListener() {
+        binding.getRoot().findViewById(R.id.cameraButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Foto
             }
         });
 
-        mMicButton.setOnClickListener(new View.OnClickListener() {
+        binding.getRoot().findViewById(R.id.micButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Audio
             }
         });
 
-        binding.sendButton.setOnClickListener(v -> {
+        binding.getRoot().findViewById(R.id.sendButton).setOnClickListener(v -> {
             Apunte apunte = new Apunte(grupoApunte.getId(), mEditText.getText().toString().trim());
             guardarApunte(apunte);
             mEditText.getText().clear();
@@ -224,9 +204,7 @@ public class ApunteFragment extends Fragment {
                     apuntes.addAll(apunteList);
                 }
                 mApunteAdapter = new ApunteAdapter(apuntes);
-                if (mRecyclerView != null) {
-                    mRecyclerView.setAdapter(mApunteAdapter);
-                }
+                mRecyclerView.setAdapter(mApunteAdapter);
             }
 
             @Override
@@ -250,8 +228,7 @@ public class ApunteFragment extends Fragment {
             mCurrentLayoutManagerType = LayoutManagerType.LINEAR_LAYOUT_MANAGER;
         }
         setRecyclerViewLayoutManager(mCurrentLayoutManagerType);
-        NavController navController = NavHostFragment.findNavController(ApunteFragment.this);
-        mApunteAdapter = new ApunteAdapter(apuntes, navController);
+        mApunteAdapter = new ApunteAdapter(apuntes);
         mRecyclerView.setAdapter(mApunteAdapter);
     }
 
@@ -271,10 +248,6 @@ public class ApunteFragment extends Fragment {
             case GRID_LAYOUT_MANAGER:
                 mLayoutManager = new GridLayoutManager(getActivity(), SPAN_COUNT);
                 mCurrentLayoutManagerType = LayoutManagerType.GRID_LAYOUT_MANAGER;
-                break;
-            case LINEAR_LAYOUT_MANAGER:
-                mLayoutManager = new LinearLayoutManager(getActivity());
-                mCurrentLayoutManagerType = LayoutManagerType.LINEAR_LAYOUT_MANAGER;
                 break;
             default:
                 mLayoutManager = new LinearLayoutManager(getActivity());
