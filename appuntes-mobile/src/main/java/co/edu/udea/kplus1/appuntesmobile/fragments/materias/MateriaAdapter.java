@@ -1,5 +1,6 @@
 package co.edu.udea.kplus1.appuntesmobile.fragments.materias;
 
+
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -21,12 +22,14 @@ import java.util.List;
 
 import co.edu.udea.kplus1.appuntesmobile.R;
 import co.edu.udea.kplus1.appuntesmobile.model.Materia;
+import co.edu.udea.kplus1.appuntesmobile.utils.Constants;
 
 public class MateriaAdapter extends RecyclerView.Adapter<MateriaAdapter.ViewHolder> {
 
     private static final String TAG = "MateriaAdapter";
     private static List<Materia> materias = new ArrayList<>();
     private static NavController navController;
+    private Boolean isLoading = true;
 
     public MateriaAdapter(List<Materia> materias) {
         MateriaAdapter.materias = materias;
@@ -36,6 +39,12 @@ public class MateriaAdapter extends RecyclerView.Adapter<MateriaAdapter.ViewHold
         MateriaAdapter.materias = materias;
         MateriaAdapter.navController = navController;
     }
+
+    public void setLoading(boolean isLoading) {
+        this.isLoading = isLoading;
+        notifyDataSetChanged();
+    }
+
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView textViewNombreMateria;
@@ -111,7 +120,13 @@ public class MateriaAdapter extends RecyclerView.Adapter<MateriaAdapter.ViewHold
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.materia_item, viewGroup, false);
+        View v;
+        if (isLoading) {
+            v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.skeleton_card_layout, viewGroup, false);
+
+        } else {
+            v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.materia_item, viewGroup, false);
+        }
         return new ViewHolder(v);
     }
 
@@ -123,18 +138,22 @@ public class MateriaAdapter extends RecyclerView.Adapter<MateriaAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-        viewHolder.getTextViewNombreMateria().setText(getItem(position).getMateriaUniversidad().getMateria());
-        viewHolder.getTextViewNombreProfesor().setText(getItem(position).getProfesor());
-        viewHolder.getTextViewCreditos().setText(String.valueOf(getItem(position).getCreditos()));
+        if (!isLoading) {
+            viewHolder.getTextViewNombreMateria().setText(getItem(position).getMateriaUniversidad().getMateria());
+            viewHolder.getTextViewNombreProfesor().setText(getItem(position).getProfesor());
+            viewHolder.getTextViewCreditos().setText(String.valueOf(getItem(position).getCreditos()));
+        }
     }
 
     @Override
     public int getItemCount() {
+        if (isLoading) {
+            return Constants.ITEMS_SKELETOR;
+        }
         return materias.size();
     }
 
     public static Materia getItem(int position) {
         return materias.get(position);
     }
-
 }

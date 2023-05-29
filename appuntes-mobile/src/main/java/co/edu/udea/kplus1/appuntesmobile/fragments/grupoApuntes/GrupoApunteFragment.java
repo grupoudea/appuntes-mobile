@@ -36,6 +36,7 @@ import co.edu.udea.kplus1.appuntesmobile.model.GrupoApunte;
 import co.edu.udea.kplus1.appuntesmobile.model.Materia;
 import co.edu.udea.kplus1.appuntesmobile.restclient.RestApiClient;
 import co.edu.udea.kplus1.appuntesmobile.service.ApuntesServiceClient;
+import co.edu.udea.kplus1.appuntesmobile.utils.Constants;
 import co.edu.udea.kplus1.appuntesmobile.utils.LayoutManagerType;
 import co.edu.udea.kplus1.appuntesmobile.utils.StandardResponse;
 import co.edu.udea.kplus1.appuntesmobile.viewModel.GrupoApunteViewModel;
@@ -82,7 +83,7 @@ public class GrupoApunteFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         if (getArguments() != null) {
             materia = (Materia) getArguments().getSerializable("materia");
-            if(materia.getIdEstudianteFk().equals(6)){
+            if (materia.getIdEstudianteFk().equals(Constants.ID_ESTUDIANTE_PUBLICO)) {
                 FloatingActionButton floatingActionButton = binding.getRoot().findViewById(R.id.buttonCrearGrupoApunte);
                 floatingActionButton.hide();
             }
@@ -170,8 +171,8 @@ public class GrupoApunteFragment extends Fragment {
 
     private void consultarGruposApuntes(String busqueda) {
         Log.i(TAG, "buscando grupos de apuntes de la materia"
-                +materia.getMateriaUniversidad().getMateria()+" para el estudiante "
-                +materia.getEstudiante().getNombre());
+                + materia.getMateriaUniversidad().getMateria() + " para el estudiante "
+                + materia.getEstudiante().getNombre());
         Call<StandardResponse<List<GrupoApunte>>> call = RestApiClient.getClient()
                 .create(ApuntesServiceClient.class).filtrarGrupoApuntesPorMateria(busqueda, materia.getId(), materia.getIdEstudianteFk());
 

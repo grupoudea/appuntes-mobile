@@ -23,9 +23,10 @@
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/card_shadow_message"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -47,7 +48,6 @@
                 android:background="@null"
                 android:hint="@string/escribir_apunte"
                 android:inputType="textMultiLine"
-                android:maxLines="5"
                 android:minLines="1"
                 android:scrollbars="vertical" />
 
@@ -76,6 +76,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
+            android:background="@drawable/card_shadow_message"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -86,17 +87,19 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:background="@null"
                 android:ems="10"
                 android:hint="@string/nombre_grupo_apunte"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:paddingStart="20dp" />
 
             <ImageButton
                 android:id="@+id/buttonSaveGrupo"
                 android:layout_width="wrap_content"
                 android:layout_height="59dp"
                 android:background="@null"
+                android:paddingEnd="20dp"
                 android:src="@drawable/baseline_save_24" />
-
         </LinearLayout>
 
         <TextView
@@ -108,6 +111,7 @@
             android:layout_marginEnd="16dp"
             android:layout_weight="1"
             android:ellipsize="end"
+            android:gravity="center"
             android:maxLines="2"
             android:text="@string/titulo_apuntes"
             android:textAlignment="center"

@@ -1,8 +1,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/menuEditarMateria"
-        android:title="@string/editar"/>
+        android:title="@string/editar" />
     <item
         android:id="@+id/menuEliminarMateria"
-        android:title="@string/delete"/>
+        android:title="@string/delete" />
 </menu>
