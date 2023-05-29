@@ -30,9 +30,6 @@
     <string name="escribir_apunte">Type in…</string>
     <string name="share">share</string>
     <string name="publish">publish</string>
-    <string name="contrase_a">Contraseña</string>
-    <string name="iniciar_sesi_n">Iniciar sesión</string>
-    <string name="cerrar_sesi_n">Cerrar sesión</string>
     <string name="contrase_a">Password</string>
     <string name="iniciar_sesi_n">Sing in</string>
     <string name="cerrar_sesi_n">Log out</string>

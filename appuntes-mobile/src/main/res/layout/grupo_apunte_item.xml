@@ -53,6 +53,7 @@
                 android:paddingStart="0dp"
                 android:paddingEnd="0dp"
                 android:paddingBottom="10dp"
+                android:text="&#8942;"
                 android:textColor="?attr/colorOnSecondary"
                 android:textSize="28sp" />
         </LinearLayout>
