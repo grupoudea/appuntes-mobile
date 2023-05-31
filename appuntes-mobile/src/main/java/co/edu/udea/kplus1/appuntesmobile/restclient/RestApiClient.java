@@ -9,7 +9,7 @@ public class RestApiClient {
 
     public static Retrofit getClient() {
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://181.133.33.188:8080/api/")
+                .baseUrl("https://sentimentanalysis.ddns.net/appuntes/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
