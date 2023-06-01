@@ -6,7 +6,8 @@
     app:cardCornerRadius="4dp"
     app:cardElevation="3dp"
     app:cardPreventCornerOverlap="true"
-    app:cardUseCompatPadding="true">
+    app:cardUseCompatPadding="true"
+    android:id="@+id/cardView">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -22,7 +23,7 @@
             <LinearLayout
                 android:id="@+id/linearLayoutApunte"
                 android:layout_width="wrap_content"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_weight="1"
                 android:orientation="vertical">
@@ -32,10 +33,24 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
-                    android:maxLines="5"
+                    android:maxLines="3"
                     android:textColor="#000000"
-                    android:textSize="18sp"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
+
+
+                <TextView
+                    android:id="@+id/viewMoreButton"
+                    android:layout_width="60dp"
+                    android:layout_height="20dp"
+                    android:textSize="12dp"
+                    android:text="Ver más"
+                    android:textColor="@color/purple_500"
+                    android:clickable="true"
+                    android:textStyle="bold"
+                    android:textAppearance="?android:textAppearanceMedium" />
+
+
             </LinearLayout>
 
             <Button
