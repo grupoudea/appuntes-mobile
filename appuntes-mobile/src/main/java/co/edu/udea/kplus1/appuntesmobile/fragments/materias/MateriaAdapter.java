@@ -29,10 +29,12 @@ public class MateriaAdapter extends RecyclerView.Adapter<MateriaAdapter.ViewHold
     private static final String TAG = "MateriaAdapter";
     private static List<Materia> materias = new ArrayList<>();
     private static NavController navController;
-    private Boolean isLoading = true;
+    private Boolean isLoading =  true;
 
     public MateriaAdapter(List<Materia> materias) {
         MateriaAdapter.materias = materias;
+        notifyDataSetChanged();
+
     }
 
     public MateriaAdapter(List<Materia> materias, NavController navController) {
@@ -40,10 +42,46 @@ public class MateriaAdapter extends RecyclerView.Adapter<MateriaAdapter.ViewHold
         MateriaAdapter.navController = navController;
     }
 
-    public void setLoading(boolean isLoading) {
-        this.isLoading = isLoading;
+    public void showSkeleton(boolean showSkeleton) {
+        isLoading = showSkeleton;
+        notifyDataSetChanged();
+
+    }
+
+    public void setMaterias(List<Materia> materias) {
+        MateriaAdapter.materias = materias;
         notifyDataSetChanged();
     }
+
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+        View v;
+        if (isLoading) {
+            v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.skeleton_card_layout, viewGroup, false);
+        } else {
+            v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.materia_item, viewGroup, false);
+        }
+        return new ViewHolder(v);
+    }
+
+    @Override
+    public void onBindViewHolder(ViewHolder viewHolder, final int position) {
+        if (!isLoading) {
+            viewHolder.getTextViewNombreMateria().setText(getItem(position).getMateriaUniversidad().getMateria());
+            viewHolder.getTextViewNombreProfesor().setText(getItem(position).getProfesor());
+            viewHolder.getTextViewCreditos().setText(String.valueOf(getItem(position).getCreditos()));
+        }
+    }
+
+
+    @Override
+    public int getItemCount() {
+        if (isLoading) {
+            return Constants.ITEMS_SKELETOR;
+        }
+        return materias.size();
+    }
+
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -118,39 +156,10 @@ public class MateriaAdapter extends RecyclerView.Adapter<MateriaAdapter.ViewHold
         }
     }
 
-    @Override
-    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        View v;
-        if (isLoading) {
-            v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.skeleton_card_layout, viewGroup, false);
-
-        } else {
-            v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.materia_item, viewGroup, false);
-        }
-        return new ViewHolder(v);
-    }
-
     private static void showMyDialogFragment(Context context, Materia materia) {
         FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
         ConfirmationDeleteMateriaFragment dialog = ConfirmationDeleteMateriaFragment.confirmationDeleteMateria(materia);
         dialog.show(fragmentManager, "my_dialog");
-    }
-
-    @Override
-    public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-        if (!isLoading) {
-            viewHolder.getTextViewNombreMateria().setText(getItem(position).getMateriaUniversidad().getMateria());
-            viewHolder.getTextViewNombreProfesor().setText(getItem(position).getProfesor());
-            viewHolder.getTextViewCreditos().setText(String.valueOf(getItem(position).getCreditos()));
-        }
-    }
-
-    @Override
-    public int getItemCount() {
-        if (isLoading) {
-            return Constants.ITEMS_SKELETOR;
-        }
-        return materias.size();
     }
 
     public static Materia getItem(int position) {

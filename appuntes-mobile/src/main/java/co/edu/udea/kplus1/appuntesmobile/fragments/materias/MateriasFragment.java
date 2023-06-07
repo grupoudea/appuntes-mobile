@@ -36,6 +36,8 @@ import co.edu.udea.kplus1.appuntesmobile.utils.LayoutManagerType;
 import co.edu.udea.kplus1.appuntesmobile.utils.StandardResponse;
 import co.edu.udea.kplus1.appuntesmobile.utils.UsuarioManager;
 import co.edu.udea.kplus1.appuntesmobile.viewModel.MateriasViewModel;
+import okhttp3.Cache;
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -59,19 +61,30 @@ public class MateriasFragment extends Fragment {
         usuarioManager = UsuarioManager.getInstance(requireContext());
         usuarioPersistence = usuarioManager.obtenerUsuarioLogueado();
         Log.i(TAG, usuarioPersistence.toString());
-        consultarMaterias("");
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.materias_fragment, container, false);
+        buildReciclerView(savedInstanceState);
 
         viewModel = new ViewModelProvider(requireActivity()).get(MateriasViewModel.class);
         binding.setLifecycleOwner(getViewLifecycleOwner());
+        viewModel.getConsultarMateriasResult().observe(getViewLifecycleOwner(), result -> {
+            if (result.isLoading()) {
+                mAdapter.showSkeleton(true);
 
-        buildReciclerView(savedInstanceState);
-
-        viewModel.get().observe(getViewLifecycleOwner(), newData -> consultarMaterias(""));
+            } else if (result.getMaterias() != null) {
+                mAdapter = new MateriaAdapter(result.getMaterias());
+                mAdapter.showSkeleton(false);
+                mAdapter.notifyDataSetChanged();
+                mRecyclerView.setAdapter(mAdapter);
+            } else {
+                // Mostrar el mensaje de error en caso de fallo
+                mAdapter.showSkeleton(false);
+                Toast.makeText(getActivity(), "ERROR: " + result.getErrorMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
         return binding.getRoot();
     }
@@ -107,6 +120,9 @@ public class MateriasFragment extends Fragment {
         initOnChangeBusqueda();
     }
 
+
+
+
     private void initOnChangeBusqueda() {
         EditText editTextBuscar = (EditText) binding.getRoot().findViewById(R.id.editTextBuscar);
 
@@ -118,7 +134,7 @@ public class MateriasFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                consultarMaterias(s.toString());
+                //viewModel.consultarMaterias(s.toString());
             }
 
             @Override
@@ -128,37 +144,7 @@ public class MateriasFragment extends Fragment {
         });
     }
 
-    private void consultarMaterias(String busqueda) {
-        Call<StandardResponse<List<Materia>>> call = RestApiClient.getClient()
-                .create(MateriasServiceClient.class)
-                .filtrarMateriasPorEstudiante(busqueda, Math.toIntExact(usuarioPersistence.getIdEstudianteFk()));
 
-        call.enqueue(new Callback<StandardResponse<List<Materia>>>() {
-            @Override
-            public void onResponse(Call<StandardResponse<List<Materia>>> call, Response<StandardResponse<List<Materia>>> response) {
-                if (Objects.nonNull(response) && Objects.nonNull(response.body()) && Objects.nonNull(response.body().getBody())) {
-                    List<Materia> materiasList = response.body().getBody();
-
-                    materias.clear();
-                    materias.addAll(materiasList);
-
-                }
-                mAdapter = new MateriaAdapter(materias);
-                mAdapter.setLoading(false);
-                if (mRecyclerView != null) {
-                    mRecyclerView.setAdapter(mAdapter);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<StandardResponse<List<Materia>>> call, Throwable t) {
-                Log.i(TAG, "Error:" + t.getLocalizedMessage());
-                Log.i(TAG, "Error:" + t.fillInStackTrace());
-                Toast.makeText(getActivity(), "ERROR" + t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                mAdapter.setLoading(false);
-            }
-        });
-    }
 
     public void setRecyclerViewLayoutManager(LayoutManagerType layoutManagerType) {
         int scrollPosition = 0;
