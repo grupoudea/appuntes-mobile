@@ -14,7 +14,6 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.fragment.NavHostFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +42,7 @@ public class MateriasFormFragment extends Fragment {
     private AutoCompleteTextView autoCompleteMateriasUniversidad;
     private ArrayAdapter<MateriaUniversidad> adaptadorMateriasUniversidad;
     private MateriaUniversidad materiaSeleccionada;
-    private Materia materia = new Materia();
+    private Materia materiaToEdit = new Materia();
     private boolean esEditar = false;
     private EditText editTextCreditos;
     private EditText editTextProfesor;
@@ -66,13 +65,10 @@ public class MateriasFormFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.materias_form_fragment, container, false);
-
-        binding.setLifecycleOwner(getViewLifecycleOwner());
+        initEvents();
 
         viewModel = new ViewModelProvider(requireActivity()).get(MateriasViewModel.class);
         binding.setLifecycleOwner(getViewLifecycleOwner());
-
-        initEvents();
         return binding.getRoot();
     }
 
@@ -81,19 +77,15 @@ public class MateriasFormFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         binding.buttonGuardar.setOnClickListener(v -> {
             if (esEditar) {
-                if (buildMateria(materia)) {
-                    actualizarMateria(materia);
-                    NavHostFragment
-                            .findNavController(MateriasFormFragment.this)
-                            .navigate(R.id.action_materiasFormFragment_to_materiasFragment);
+                if (buildMateria(materiaToEdit)) {
+                    actualizarMateria(materiaToEdit);
+
                 }
             } else {
                 Materia materiaNew = new Materia();
                 if (buildMateria(materiaNew)) {
                     guardarNuevaMateria(materiaNew);
-                    NavHostFragment
-                            .findNavController(MateriasFormFragment.this)
-                            .navigate(R.id.action_materiasFormFragment_to_materiasFragment);
+
                 }
             }
         });
@@ -101,7 +93,7 @@ public class MateriasFormFragment extends Fragment {
         if (getArguments() != null) {
             esEditar = (boolean) getArguments().getSerializable("esEditar");
             if (esEditar) {
-                materia = (Materia) getArguments().getSerializable("materia");
+                materiaToEdit = (Materia) getArguments().getSerializable("materia");
                 setMateria();
             }
         }
@@ -148,15 +140,15 @@ public class MateriasFormFragment extends Fragment {
     }
 
     private void setMateria() {
-        if (Objects.nonNull(materia.getCreditos())) {
-            editTextCreditos.setText(String.valueOf(materia.getCreditos()));
+        if (Objects.nonNull(materiaToEdit.getCreditos())) {
+            editTextCreditos.setText(String.valueOf(materiaToEdit.getCreditos()));
         }
-        if (Objects.nonNull(materia.getProfesor())) {
-            editTextProfesor.setText(String.valueOf(materia.getProfesor()));
+        if (Objects.nonNull(materiaToEdit.getProfesor())) {
+            editTextProfesor.setText(String.valueOf(materiaToEdit.getProfesor()));
         }
-        if (Objects.nonNull(materia.getMateriaUniversidad())) {
-            materiaSeleccionada = materia.getMateriaUniversidad();
-            autoCompleteMateriasUniversidad.setText(materia.getMateriaUniversidad().getMateria());
+        if (Objects.nonNull(materiaToEdit.getMateriaUniversidad())) {
+            materiaSeleccionada = materiaToEdit.getMateriaUniversidad();
+            autoCompleteMateriasUniversidad.setText(materiaToEdit.getMateriaUniversidad().getMateria());
 
             adaptadorMateriasUniversidad.notifyDataSetChanged();
             autoCompleteMateriasUniversidad.postDelayed(() -> {
@@ -204,23 +196,26 @@ public class MateriasFormFragment extends Fragment {
     private void guardarNuevaMateria(Materia materia) {
         Call<StandardResponse<Materia>> call = RestApiClient.getClient()
                 .create(MateriasServiceClient.class).guardarMateria(materia);
+        binding.buttonGuardar.setEnabled(false);
 
         call.enqueue(new Callback<StandardResponse<Materia>>() {
             @Override
             public void onResponse(Call<StandardResponse<Materia>> call, Response<StandardResponse<Materia>> response) {
                 if (Objects.nonNull(response) && Objects.nonNull(response.body()) && Objects.nonNull(response.body().getBody())) {
                     Materia materiaResponse = response.body().getBody();
-                    viewModel.set(materiaResponse);
+                    viewModel.setNuevaMateria(materiaResponse);
                     Toast.makeText(getActivity(), R.string.mensaje_crear_materia_exito, Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(getActivity(), R.string.mensaje_crear_materia_error, Toast.LENGTH_SHORT).show();
                 }
+                binding.buttonGuardar.setEnabled(true);
             }
 
             @Override
             public void onFailure(Call<StandardResponse<Materia>> call, Throwable t) {
                 Log.i(TAG, "Error:" + t.getLocalizedMessage());
                 Log.i(TAG, "Error:" + t.fillInStackTrace());
+                binding.buttonGuardar.setEnabled(true);
                 Toast.makeText(getActivity(), "ERROR" + t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -235,7 +230,7 @@ public class MateriasFormFragment extends Fragment {
             public void onResponse(Call<StandardResponse<Materia>> call, Response<StandardResponse<Materia>> response) {
                 if (Objects.nonNull(response) && Objects.nonNull(response.body()) && Objects.nonNull(response.body().getBody())) {
                     Materia materiaResponse = response.body().getBody();
-                    viewModel.set(materiaResponse);
+                    viewModel.editarMateria(materiaResponse);
                     Toast.makeText(getActivity(), R.string.mensaje_editar_materia_exito, Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(getActivity(), R.string.mensaje_editar_materia_error, Toast.LENGTH_SHORT).show();

@@ -86,7 +86,7 @@ public class MateriasPublicasFragment extends Fragment {
 
         Call<StandardResponse<List<Materia>>> call = RestApiClient.getClient()
                 .create(MateriasServiceClient.class)
-                .filtrarMateriasPorEstudiante(busqueda, Constants.ID_ESTUDIANTE_PUBLICO);
+                .filtrarMateriasPorEstudiantePublico(busqueda, Constants.ID_ESTUDIANTE_PUBLICO);
         call.enqueue(new Callback<StandardResponse<List<Materia>>>() {
             @Override
             public void onResponse(Call<StandardResponse<List<Materia>>> call, Response<StandardResponse<List<Materia>>> response) {
@@ -96,7 +96,7 @@ public class MateriasPublicasFragment extends Fragment {
                 materias.addAll(materiasList);
 
                 mAdapter = new MateriaAdapter(materias);
-                mAdapter.setLoading(false);
+                mAdapter.showSkeleton(false);
                 mRecyclerView.setAdapter(mAdapter);
             }
 
@@ -104,7 +104,7 @@ public class MateriasPublicasFragment extends Fragment {
             public void onFailure(Call<StandardResponse<List<Materia>>> call, Throwable t) {
                 Log.i(TAG, "Error:" + t.getLocalizedMessage());
                 Log.i(TAG, "Error:" + t.fillInStackTrace());
-                mAdapter.setLoading(false);
+                mAdapter.showSkeleton(false);
                 Toast.makeText(getActivity(), "ERROR" + t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });

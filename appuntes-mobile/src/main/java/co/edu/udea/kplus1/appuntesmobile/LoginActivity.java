@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -25,8 +26,8 @@ public class LoginActivity extends AppCompatActivity {
     private UsuarioManager usuarioManager;
     private EditText usuario;
     private EditText contrasena;
+    private Button btnLogin;
     private ProgressDialog progressDialog;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,7 @@ public class LoginActivity extends AppCompatActivity {
     public void initEvents() {
         usuario = findViewById(R.id.et_usuario);
         contrasena = findViewById(R.id.et_contrasena);
+        btnLogin = findViewById(R.id.btnLogin);
 
         if (usuarioPersistence.getNombreUsuario() != null && !usuarioPersistence.getNombreUsuario().isEmpty()) {
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -55,10 +57,10 @@ public class LoginActivity extends AppCompatActivity {
             progressDialog.setMessage(message);
             progressDialog.setIndeterminate(true);
             progressDialog.setCancelable(false);
-        } else {
+        }else{
             progressDialog.setMessage(message);
-            progressDialog.show();
         }
+        progressDialog.show();
     }
 
     private void hideProgressDialog() {
@@ -68,6 +70,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void iniciarSesionOnClick(View view) {
+        btnLogin.setEnabled(false);
         final String usuarioIngresado = usuario.getText().toString().trim();
         final String contrasenaIngresada = contrasena.getText().toString().trim();
 
@@ -94,7 +97,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<StandardResponse<Usuario>> call, Throwable t) {
                 hideProgressDialog();
-                Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
+                btnLogin.setEnabled(true);
+                Toast.makeText(LoginActivity.this,t.getMessage(),Toast.LENGTH_LONG).show();
             }
         });
     }

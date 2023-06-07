@@ -21,6 +21,9 @@ public interface MateriasServiceClient {
     @GET(MATERIAS_BASE + "/filtro-materias")
     Call<StandardResponse<List<Materia>>> filtrarMateriasPorEstudiante(@Query("busqueda") String busqueda, @Query("idEstudiante") Integer idEstudiante);
 
+    @GET(MATERIAS_BASE + "/filtro-materias")
+    Call<StandardResponse<List<Materia>>> filtrarMateriasPorEstudiantePublico(@Query("busqueda") String busqueda, @Query("idEstudiante") Integer idEstudiante);
+
     @GET(MATERIAS_BASE + "/filtro-materias-universidad")
     Call<StandardResponse<List<MateriaUniversidad>>> buscarMateriasUniversidad(@Query("materia") String materia);
 

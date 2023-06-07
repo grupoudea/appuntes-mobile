@@ -35,21 +35,24 @@
                     android:maxLines="1"
                     android:textColor="?attr/colorOnSecondary"
                     android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:text="MATERIA" />
 
                 <TextView
                     android:id="@+id/textViewNombreProfesor"
                     android:layout_width="320dp"
                     android:layout_height="wrap_content"
                     android:textColor="?attr/colorOnSecondary"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:text="Profesor"/>
 
                 <TextView
                     android:id="@+id/textViewCreditos"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="?attr/colorOnSecondary"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:text="creditos"/>
             </LinearLayout>
 
             <Button

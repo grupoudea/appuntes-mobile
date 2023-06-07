@@ -18,13 +18,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="16dp">
+            android:paddingStart="8dp"
+            android:paddingEnd="16dp"
+            >
 
             <LinearLayout
                 android:id="@+id/linearLayoutApunte"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
@@ -36,7 +37,9 @@
                     android:maxLines="3"
                     android:textColor="#000000"
                     android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:text="Este es mi super mensaje de prueba\nasi va quedar\nok\nok"
+                    />
 
 
                 <TextView
@@ -55,13 +58,9 @@
 
             <Button
                 android:id="@+id/buttonMenuApunte"
-                android:layout_width="20dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top|end"
+                android:layout_width="35dp"
+                android:layout_height="match_parent"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:paddingStart="0dp"
-                android:paddingEnd="0dp"
-                android:paddingBottom="10dp"
                 android:text="&#8942;"
                 android:textColor="?attr/colorOnSecondary"
                 android:textSize="28sp" />

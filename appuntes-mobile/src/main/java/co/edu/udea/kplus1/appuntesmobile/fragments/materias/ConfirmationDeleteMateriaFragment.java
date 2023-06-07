@@ -79,13 +79,13 @@ public class ConfirmationDeleteMateriaFragment extends DialogFragment {
     }
 
     private void eliminarMateria(Materia materia) {
-        Call<StandardResponse<Void>> call = RestApiClient.getClient()
+         Call<StandardResponse<Void>> call = RestApiClient.getClient()
                 .create(MateriasServiceClient.class).eliminarMateria(materia.getId());
 
         call.enqueue(new Callback<StandardResponse<Void>>() {
             @Override
             public void onResponse(Call<StandardResponse<Void>> call, Response<StandardResponse<Void>> response) {
-                viewModel.set(new Materia());
+                viewModel.eliminarMateria(materia);
             }
 
             @Override
